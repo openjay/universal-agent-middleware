@@ -7,7 +7,7 @@
 
 ## Executive Summary
 
-GO-PUBLIC-CODE is **COMPLETE**. The public candidate has **111 tracked files** (allowlist-verified with SHA256), **zero personal-path hits in tracked content**, **199 passing tests** (1 skipped), **100% pinned GitHub Action SHAs**, and **8/8 CI matrix cells green** on public CI run `33954828455`. GO-DISTRIBUTION (tag, GitHub Release, PyPI OIDC) proceeds under explicit authorization.
+GO-PUBLIC-CODE is **COMPLETE**. The public candidate has **111 tracked files** (allowlist-verified with SHA256), **zero personal-path hits in tracked content**, **199 passing tests** (1 skipped), **100% pinned GitHub Action SHAs**, and **8/8 CI matrix cells green** on public CI run `33954828455`. GO-DISTRIBUTION is **COMPLETE** — tag, GitHub Release assets, and PyPI publish verified.
 
 ## Gate Readiness (O0–O9)
 
@@ -22,7 +22,7 @@ GO-PUBLIC-CODE is **COMPLETE**. The public candidate has **111 tracked files** (
 | **O6 Supply Chain** | **PASS (pre-release)** | Split build/publish jobs; 100% pinned 40-char action SHAs; attestation in release.yml |
 | **O7 Community** | **PASS** | SECURITY.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, GOVERNANCE.md, ROADMAP.md |
 | **O8 Runtime Honesty** | **PASS** | public-profile-contract.md ACCEPTED; legacy HTTP/LocalExecutor marked experimental |
-| **O9 Release Baseline** | **PASS** | Tag `v0.5.1rc1` published; wheel + sdist attached to GitHub Release |
+| **O9 Release Baseline** | **PASS** | Tag `v0.5.1rc1` published; wheel + sdist on GitHub Release and PyPI |
 
 ## CI Qualification (public remote)
 
@@ -43,10 +43,10 @@ GO-PUBLIC-CODE is **COMPLETE**. The public candidate has **111 tracked files** (
 
 | Artifact | Notes |
 |----------|-------|
-| `universal_agent_middleware-0.5.1rc1-py3-none-any.whl` | Attached to [GitHub Release v0.5.1rc1](https://github.com/openjay/universal-agent-middleware/releases/tag/v0.5.1rc1) |
-| `universal_agent_middleware-0.5.1rc1.tar.gz` | Attached to GitHub Release v0.5.1rc1; includes tests/ via MANIFEST.in |
+| `universal_agent_middleware-0.5.1rc1-py3-none-any.whl` | [GitHub Release v0.5.1rc1](https://github.com/openjay/universal-agent-middleware/releases/tag/v0.5.1rc1) + [PyPI 0.5.1rc1](https://pypi.org/project/universal-agent-middleware/0.5.1rc1/) |
+| `universal_agent_middleware-0.5.1rc1.tar.gz` | GitHub Release + PyPI; includes tests/ via MANIFEST.in |
 
-PyPI publish uses OIDC trusted publishing (`release.yml` → environment `pypi`). Configure Pending Publisher on pypi.org, then re-run the Release workflow or publish a patch tag to complete distribution.
+PyPI publish **COMPLETE** (2026-09-05): `pip install universal-agent-middleware==0.5.1rc1` verified — 19 tools in `tool_contract.json`, `uam --help` OK. Future releases may use OIDC trusted publishing (`release.yml` → environment `pypi`).
 
 ## Allowlist manifest
 
@@ -62,13 +62,13 @@ PyPI publish uses OIDC trusted publishing (`release.yml` → environment `pypi`)
 | GO-PREP | **COMPLETE** — OSS-4.5 repair slice |
 | GO-PUSH-PRIVATE | **COMPLETE** — convergence commit push + private CI 8/8 |
 | GO-PUBLIC-CODE | **COMPLETE** — genesis `cd6e50b`, public CI `33954828455` 8/8 |
-| GO-DISTRIBUTION | **PASS (GitHub)** — tag `v0.5.1rc1`, release assets attached; **PyPI OIDC pending** human Pending Publisher on pypi.org |
+| GO-DISTRIBUTION | **COMPLETE** — tag `v0.5.1rc1`, GitHub Release assets, PyPI `0.5.1rc1` live and install-verified |
 
 ## Unresolved / Known Limitations
 
 - Private repo history contains personal paths (not exported under Path 1)
 - Production service on operator Mac is independent of public Preview
-- PyPI Trusted Publisher OIDC must be configured on pypi.org for automated publish
+- PyPI Trusted Publisher OIDC recommended for future automated publish (RC1 uploaded via API token)
 - Windows/NFS/multi-tenant explicitly out of Preview scope
 
 ## Path 1 — Clean Public Genesis (executed)

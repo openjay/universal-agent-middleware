@@ -1,8 +1,8 @@
 {
   "schema": "UAM_PRIVATE_SCAN_COVERAGE_V1",
-  "status": "QUALIFIED_AND_EXPORTED",
+  "status": "QUALIFIED_EXPORTED_AND_DISTRIBUTED",
   "task_id": "OSS-022",
-  "checked_at": "2026-09-05T08:32:00Z",
+  "checked_at": "2026-09-05T08:52:00Z",
   "baseline_commit": "cd6e50ba865fc98e70e41c6742a863b8f2bf89e9",
   "scope": "public candidate exported via Path 1 clean genesis (111 files)",
   "tracked_file_count": 111,
@@ -43,6 +43,15 @@
     "conclusion": "success",
     "qualified_at": "2026-09-05T08:18:27Z"
   },
+  "distribution": {
+    "pypi_version": "0.5.1rc1",
+    "pypi_url": "https://pypi.org/project/universal-agent-middleware/0.5.1rc1/",
+    "github_release": "v0.5.1rc1",
+    "published_at": "2026-09-05T08:52:00Z",
+    "install_verified": true,
+    "tool_count": 19,
+    "go_distribution": "COMPLETE"
+  },
   "supply_chain": {
     "workflow_action_pinning": "100% 40-char commit SHAs in ci.yml and release.yml",
     "release_yml_fixes": [
@@ -58,6 +67,7 @@
       "release.yml action SHA pinning (download-artifact + pypa publish)",
       "public-profile-contract.md status ACCEPTED (R1 + R2 qualified)",
       "approved-export-allowlist.json regenerated — 111/111 SHA256, 0 mismatches",
+      "GO-DISTRIBUTION complete — PyPI 0.5.1rc1 live, pip install verified, 19 tools",
       "Path 1 genesis procedure documented in launch-packet.md"
     ],
     "resolved_in_oss45": [
