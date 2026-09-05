@@ -152,8 +152,10 @@ Project-specific observation profiles in `config/project-observation-profiles/` 
 | Audit v2 integrity | PASS |
 | Scope search enforcement | PASS (OSS-SEC-001 pre-read boundary) |
 | Portable test suite | PASS (199 tests, 1 skipped; synthetic fixtures) |
-| Python/OS matrix (3.11–3.14) | CI configured — 8-cell matrix verified on private remote |
-| Public release gates (O0–O9) | See launch packet — public PASS pending clean genesis export |
+| Python/OS matrix (3.11–3.14) | **PASS** — 8/8 public CI (run `33954828455`) |
+| Public release gates (O0–O9) | **PASS** — live public repo; see `docs/oss/launch-packet.md` |
+| GitHub Release `v0.5.1rc1` | **PASS** — wheel + sdist attached |
+| PyPI distribution | **Configured** — OIDC trusted publishing via `release.yml` (manual Pending Publisher step on pypi.org) |
 
 Public Preview supports SDK stdio session-read profile only. Legacy HTTP adapter and LocalExecutor are experimental and not part of the Preview contract. See `docs/oss/public-profile-contract.md`.
 

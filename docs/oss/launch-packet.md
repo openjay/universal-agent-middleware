@@ -22,7 +22,7 @@ GO-PUBLIC-CODE is **COMPLETE**. The public candidate has **111 tracked files** (
 | **O6 Supply Chain** | **PASS (pre-release)** | Split build/publish jobs; 100% pinned 40-char action SHAs; attestation in release.yml |
 | **O7 Community** | **PASS** | SECURITY.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, GOVERNANCE.md, ROADMAP.md |
 | **O8 Runtime Honesty** | **PASS** | public-profile-contract.md ACCEPTED; legacy HTTP/LocalExecutor marked experimental |
-| **O9 Release Baseline** | **IN PROGRESS** | Genesis `cd6e50b` exported; tag `v0.5.1rc1` + PyPI under GO-DISTRIBUTION |
+| **O9 Release Baseline** | **PASS** | Tag `v0.5.1rc1` published; wheel + sdist attached to GitHub Release |
 
 ## CI Qualification (public remote)
 
@@ -43,8 +43,10 @@ GO-PUBLIC-CODE is **COMPLETE**. The public candidate has **111 tracked files** (
 
 | Artifact | Notes |
 |----------|-------|
-| `universal_agent_middleware-0.5.1rc1-py3-none-any.whl` | Built via release workflow + local smoke verification |
-| `universal_agent_middleware-0.5.1rc1.tar.gz` | Includes tests/ via MANIFEST.in; 200 tests collected |
+| `universal_agent_middleware-0.5.1rc1-py3-none-any.whl` | Attached to [GitHub Release v0.5.1rc1](https://github.com/openjay/universal-agent-middleware/releases/tag/v0.5.1rc1) |
+| `universal_agent_middleware-0.5.1rc1.tar.gz` | Attached to GitHub Release v0.5.1rc1; includes tests/ via MANIFEST.in |
+
+PyPI publish uses OIDC trusted publishing (`release.yml` → environment `pypi`). Configure Pending Publisher on pypi.org, then re-run the Release workflow or publish a patch tag to complete distribution.
 
 ## Allowlist manifest
 
@@ -60,7 +62,7 @@ GO-PUBLIC-CODE is **COMPLETE**. The public candidate has **111 tracked files** (
 | GO-PREP | **COMPLETE** — OSS-4.5 repair slice |
 | GO-PUSH-PRIVATE | **COMPLETE** — convergence commit push + private CI 8/8 |
 | GO-PUBLIC-CODE | **COMPLETE** — genesis `cd6e50b`, public CI `33954828455` 8/8 |
-| GO-DISTRIBUTION | **IN PROGRESS** — tag `v0.5.1rc1`, GitHub Release, PyPI OIDC |
+| GO-DISTRIBUTION | **PASS (GitHub)** — tag `v0.5.1rc1`, release assets attached; **PyPI OIDC pending** human Pending Publisher on pypi.org |
 
 ## Unresolved / Known Limitations
 

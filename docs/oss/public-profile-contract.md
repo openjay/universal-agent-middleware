@@ -72,10 +72,10 @@ All tools expose `readOnlyHint=true, destructiveHint=false`:
 
 | OS | Python | CI status |
 |----|--------|-----------|
-| Linux | 3.11–3.14 | **PASS** — 8-cell matrix qualified on private remote |
-| macOS | 3.11–3.14 | **PASS** — 8-cell matrix qualified on private remote |
+| Linux | 3.11–3.14 | **PASS** — 8/8 public CI (run `33954828455`) |
+| macOS | 3.11–3.14 | **PASS** — 8/8 public CI (run `33954828455`) |
 
-Full 8-cell matrix qualification (gate O3 / R1) is complete. Public PASS requires all cells green on the candidate commit at export time.
+Full 8-cell matrix qualification (gate O3 / R1) is complete on the live public repository `openjay/universal-agent-middleware` at genesis commit `cd6e50b`.
 
 ## Security negatives (R2 qualified for Preview)
 
