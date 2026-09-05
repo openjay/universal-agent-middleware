@@ -4,7 +4,7 @@ UAM v0.5.1rc1 (Public Preview RC1) targets MCP revision `2026-07-28` for modern 
 
 The session-read profile exposes **19 read-only MCP tools** derived from `tool_contract.json`. See `docs/oss/public-profile-contract.md` for the canonical inventory.
 
-**Distribution:** Install from PyPI (`pip install universal-agent-middleware==0.5.1rc1`) after Pending Publisher OIDC is configured, or download wheel/sdist from [GitHub Release v0.5.1rc1](https://github.com/openjay/universal-agent-middleware/releases/tag/v0.5.1rc1). Public CI qualification: 8/8 PASS (run `33954828455`).
+**Distribution:** Install from PyPI (`pip install universal-agent-middleware==0.5.1rc1`) or download wheel/sdist from [GitHub Release v0.5.1rc1](https://github.com/openjay/universal-agent-middleware/releases/tag/v0.5.1rc1). Public CI qualification: 8/8 PASS (run `33954828455`).
 
 HTTP endpoint: `POST /mcp`
 Stdio entry: `uam mcp-sdk-stdio --profile session-read --registry ... --state-dir ...`

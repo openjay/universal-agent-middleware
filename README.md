@@ -155,7 +155,7 @@ Project-specific observation profiles in `config/project-observation-profiles/` 
 | Python/OS matrix (3.11–3.14) | **PASS** — 8/8 public CI (run `33954828455`) |
 | Public release gates (O0–O9) | **PASS** — live public repo; see `docs/oss/launch-packet.md` |
 | GitHub Release `v0.5.1rc1` | **PASS** — wheel + sdist attached |
-| PyPI distribution | **Configured** — OIDC trusted publishing via `release.yml` (manual Pending Publisher step on pypi.org) |
+| PyPI distribution | **PASS** — [0.5.1rc1 live](https://pypi.org/project/universal-agent-middleware/0.5.1rc1/); `pip install universal-agent-middleware==0.5.1rc1` verified |
 
 Public Preview supports SDK stdio session-read profile only. Legacy HTTP adapter and LocalExecutor are experimental and not part of the Preview contract. See `docs/oss/public-profile-contract.md`.
 
