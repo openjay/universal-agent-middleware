@@ -2,29 +2,29 @@
 
 **Prepared:** 2026-09-05  
 **Target:** Public Preview RC1 (`0.5.1rc1`)  
-**Candidate commit:** see `approved-export-allowlist.json` → `baseline_commit` (qualified at export time)  
+**Genesis commit:** `cd6e50ba865fc98e70e41c6742a863b8f2bf89e9` (openjay/universal-agent-middleware `main`)  
 **Repository strategy:** Path 1 — Clean Public Genesis (private repo retained as provenance)
 
 ## Executive Summary
 
-Final convergence (Steps 1–4) completes on the private remote after push and CI qualification. The public candidate has **111 tracked files** (allowlist-verified with SHA256), **zero personal-path hits in tracked content**, **199 passing tests** (1 skipped), **100% pinned GitHub Action SHAs**, and requires **8/8 CI matrix cells green** on the candidate commit at export time. Public visibility flip and PyPI distribution remain blocked pending explicit GO-PUBLIC-CODE and GO-DISTRIBUTION authorization.
+GO-PUBLIC-CODE is **COMPLETE**. The public candidate has **111 tracked files** (allowlist-verified with SHA256), **zero personal-path hits in tracked content**, **199 passing tests** (1 skipped), **100% pinned GitHub Action SHAs**, and **8/8 CI matrix cells green** on public CI run `33954828455`. GO-DISTRIBUTION (tag, GitHub Release, PyPI OIDC) proceeds under explicit authorization.
 
 ## Gate Readiness (O0–O9)
 
 | Gate | Status | Evidence |
 |------|--------|----------|
-| **O0 Privacy** | **PASS (tree)** / Path 1 genesis | 39 PRIVATE_RETAIN untracked; allowlist manifest (111 files) |
+| **O0 Privacy** | **PASS** | Path 1 genesis; 39 PRIVATE_RETAIN untracked; allowlist manifest (111 files) |
 | **O1 Truth** | **PASS** | README/SSOT aligned to v0.5.1rc1, 19 tools; `public-profile-contract.md` **ACCEPTED** |
-| **O2 Reproducibility** | **PASS (local + CI)** | `pytest -q`: 199 passed, 1 skipped; sdist collect-only: 200 tests, 0 errors |
-| **O3 Portability** | **PASS (private CI)** | 8/8 matrix green — R1 qualified (ubuntu + macos × 3.11–3.14) |
-| **O4 Security** | **PASS (R2 qualified)** | OSS-SEC-001 pre-exclusion globs + disjoint sub-roots + post-filter |
-| **O5 Packaging** | **PASS (local)** | MANIFEST.in includes tests/fixtures; sdist + wheel built |
-| **O6 Supply Chain** | **READY (pre-config)** | Split build/publish jobs; 100% pinned 40-char action SHAs; PyPI OIDC pending GO-DISTRIBUTION |
+| **O2 Reproducibility** | **PASS (local + public CI)** | `pytest -q`: 199 passed, 1 skipped; sdist collect-only: 200 tests, 0 errors |
+| **O3 Portability** | **PASS (public CI)** | 8/8 matrix green — run `33954828455` (ubuntu + macos × 3.11–3.14) |
+| **O4 Security** | **PASS** | OSS-SEC-001 pre-exclusion globs + disjoint sub-roots + post-filter; PVR enabled |
+| **O5 Packaging** | **PASS** | MANIFEST.in includes tests/fixtures; sdist + wheel built |
+| **O6 Supply Chain** | **PASS (pre-release)** | Split build/publish jobs; 100% pinned 40-char action SHAs; attestation in release.yml |
 | **O7 Community** | **PASS** | SECURITY.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, GOVERNANCE.md, ROADMAP.md |
 | **O8 Runtime Honesty** | **PASS** | public-profile-contract.md ACCEPTED; legacy HTTP/LocalExecutor marked experimental |
-| **O9 Release Baseline** | **PENDING (post-public)** | Requires clean genesis export + tagged release after GO-PUBLIC-CODE |
+| **O9 Release Baseline** | **IN PROGRESS** | Genesis `cd6e50b` exported; tag `v0.5.1rc1` + PyPI under GO-DISTRIBUTION |
 
-## CI Qualification (private remote)
+## CI Qualification (public remote)
 
 | Cell | Result |
 |------|--------|
@@ -37,53 +37,54 @@ Final convergence (Steps 1–4) completes on the private remote after push and C
 | macos-latest × Python 3.13 | PASS |
 | macos-latest × Python 3.14 | PASS |
 
-**Workflow run:** see `private-scan-coverage.json` `ci_qualification.run_id` for latest qualified run.
+**Workflow run:** `33954828455` on `openjay/universal-agent-middleware` — 8/8 PASS (2026-09-05T08:18:27Z).
 
-## Artifacts (local build, 0.5.1rc1)
+## Artifacts (0.5.1rc1)
 
 | Artifact | Notes |
 |----------|-------|
-| `universal_agent_middleware-0.5.1rc1-py3-none-any.whl` | Built locally; hash recorded at release time |
+| `universal_agent_middleware-0.5.1rc1-py3-none-any.whl` | Built via release workflow + local smoke verification |
 | `universal_agent_middleware-0.5.1rc1.tar.gz` | Includes tests/ via MANIFEST.in; 200 tests collected |
 
 ## Allowlist manifest
 
 - **File:** `docs/oss/approved-export-allowlist.json`
-- **Files covered:** 111 / 111 (100% of `git ls-files`)
+- **Files covered:** 111 / 111 (100% of public candidate tree)
 - **Generated:** see `generated_at` in manifest
-- **Baseline commit:** see `baseline_commit` in manifest
+- **Baseline commit:** `cd6e50ba865fc98e70e41c6742a863b8f2bf89e9` (genesis)
 
 ## Decision Points
 
 | Point | Status |
 |-------|--------|
 | GO-PREP | **COMPLETE** — OSS-4.5 repair slice |
-| GO-PUSH-PRIVATE | **IN PROGRESS** — convergence commit push + CI 8/8 qualification |
-| GO-PUBLIC-CODE | **HOLD** — owner authorization required |
-| GO-DISTRIBUTION | **HOLD** — PyPI OIDC + post-public verification |
+| GO-PUSH-PRIVATE | **COMPLETE** — convergence commit push + private CI 8/8 |
+| GO-PUBLIC-CODE | **COMPLETE** — genesis `cd6e50b`, public CI `33954828455` 8/8 |
+| GO-DISTRIBUTION | **IN PROGRESS** — tag `v0.5.1rc1`, GitHub Release, PyPI OIDC |
 
 ## Unresolved / Known Limitations
 
 - Private repo history contains personal paths (not exported under Path 1)
 - Production service on operator Mac is independent of public Preview
-- Attestation verification deferred until public repo + release tag exist
+- PyPI Trusted Publisher OIDC must be configured on pypi.org for automated publish
 - Windows/NFS/multi-tenant explicitly out of Preview scope
 
-## Path 1 — Clean Public Genesis (ready on GO-PUBLIC-CODE)
+## Path 1 — Clean Public Genesis (executed)
 
-Once owner authorization is given, export the exact 111-file candidate in a single step:
+Genesis export completed 2026-09-05:
+
+- **Public repo:** `openjay/universal-agent-middleware`
+- **Genesis commit:** `cd6e50ba865fc98e70e41c6742a863b8f2bf89e9`
+- **Public CI qualification:** run `33954828455` (8/8 PASS)
+- **Provenance retained:** `openjay/uam-provenance` (private)
+
+Verification command (0 mismatches required):
 
 ```bash
-# From private provenance repo at the qualified candidate (HEAD or tagged baseline):
-BASELINE="$(git rev-parse HEAD)"
-# Optional cross-check: should match docs/oss/approved-export-allowlist.json baseline_commit ± allowlist pin commit
-git archive --format=tar "$BASELINE" | tar -x -C /tmp/uam-public-genesis
-
-# Verify every allowlisted file hash (0 mismatches required):
 python3 - <<'PY'
 import hashlib, json, sys
 from pathlib import Path
-root = Path("/tmp/uam-public-genesis")
+root = Path(".")
 doc = json.loads((root / "docs/oss/approved-export-allowlist.json").read_text())
 placeholder = "0" * 64
 bad = []
@@ -99,16 +100,6 @@ for e in doc["files"]:
 print(f"mismatches: {len(bad)}")
 sys.exit(1 if bad else 0)
 PY
-
-# Initialize clean public repo (no history from private remote):
-cd /tmp/uam-public-genesis
-git init -b main
-git add -A
-git commit -m "Public Preview RC1 genesis (0.5.1rc1)"
-git remote add origin git@github.com:openjay/universal-agent-middleware.git
-git push -u origin main --force  # empty public repo only; never force-push private provenance
-git tag -a v0.5.1rc1 -m "Public Preview RC1"
-git push origin v0.5.1rc1
 ```
 
 Do **not** flip private repo visibility. Retain private repo as provenance; public repo receives genesis commit only.

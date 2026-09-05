@@ -1,8 +1,8 @@
 {
   "schema": "UAM_APPROVED_EXPORT_ALLOWLIST_V1",
   "status": "ACCEPTED",
-  "baseline_commit": "7fb48876e67fe2cd32aa65b9a4099bdfe8c2c3ae",
-  "generated_at": "2026-09-05T08:05:03Z",
+  "baseline_commit": "cd6e50ba865fc98e70e41c6742a863b8f2bf89e9",
+  "generated_at": "2026-09-05T08:33:38Z",
   "source_inventory": "git ls-files @ baseline_commit",
   "dispositions_included": [
     "PUBLIC_CANDIDATE"
@@ -246,13 +246,13 @@
     {
       "path": "docs/oss/approved-export-allowlist.json",
       "disposition": "PUBLIC_CANDIDATE",
-      "sha256": "153a0369432880388578e8e79bc9eb4f16b1d8dd48803b3219ce2efedc75bc4d",
+      "sha256": "e36c48e60c65babade4f4f9c4cec3edba83d0a49242f3079570252c3a5f41b3c",
       "owner_role": "CORE"
     },
     {
       "path": "docs/oss/launch-packet.md",
       "disposition": "PUBLIC_CANDIDATE",
-      "sha256": "d0226b8c692140a7d374cc6a304d6bd55fe4f009a240187c6186719574c7dc4c",
+      "sha256": "d9d9a835c778e5903d77872a675942f5fdca47b27475ddad4afb883324ec0446",
       "owner_role": "CORE"
     },
     {
@@ -264,7 +264,7 @@
     {
       "path": "docs/oss/private-scan-coverage.json",
       "disposition": "PUBLIC_CANDIDATE",
-      "sha256": "827e553946b8b91c6fa70ca99546df9fee37dd4ba9874c8daaa79eeaa5e6df03",
+      "sha256": "ee575f6ca19e1deb9f9774b6e30f3ab36e27e7eda979dc8be31a051171e4dac7",
       "owner_role": "CORE"
     },
     {

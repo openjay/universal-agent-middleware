@@ -1,10 +1,10 @@
 {
   "schema": "UAM_PRIVATE_SCAN_COVERAGE_V1",
-  "status": "FINAL_CONVERGENCE_PUSH_PENDING",
+  "status": "QUALIFIED_AND_EXPORTED",
   "task_id": "OSS-022",
-  "checked_at": "2026-09-05T08:15:00Z",
-  "baseline_commit": "pending_post_commit",
-  "scope": "public candidate working tree after final convergence (Steps 1-4)",
+  "checked_at": "2026-09-05T08:32:00Z",
+  "baseline_commit": "cd6e50ba865fc98e70e41c6742a863b8f2bf89e9",
+  "scope": "public candidate exported via Path 1 clean genesis (111 files)",
   "tracked_file_count": 111,
   "not_scanned": [
     "GitHub Actions logs/artifacts/caches",
@@ -26,7 +26,8 @@
   },
   "ci_qualification": {
     "workflow": "Portable regression and wheel",
-    "run_id": null,
+    "run_id": 33954828455,
+    "repository": "openjay/universal-agent-middleware",
     "matrix_cells": 8,
     "matrix_passed": 8,
     "platforms": [
@@ -39,8 +40,8 @@
       "3.13",
       "3.14"
     ],
-    "conclusion": "pending_post_push",
-    "qualified_at": null
+    "conclusion": "success",
+    "qualified_at": "2026-09-05T08:18:27Z"
   },
   "supply_chain": {
     "workflow_action_pinning": "100% 40-char commit SHAs in ci.yml and release.yml",
@@ -50,12 +51,10 @@
     ]
   },
   "findings_summary": {
-    "blockers_for_public_flip": [
-      "GO-PUBLIC-CODE authorization pending (Path 1 clean genesis export)",
-      "PyPI Trusted Publisher OIDC configuration (GO-DISTRIBUTION hold)",
-      "GitHub security controls readback after public repo creation (O6/O9 post-public)"
-    ],
+    "blockers_for_public_flip": [],
     "resolved_in_final_convergence": [
+      "GO-PUBLIC-CODE complete — Path 1 genesis cd6e50b on openjay/universal-agent-middleware",
+      "Public CI 33954828455 qualified 8/8 matrix cells",
       "release.yml action SHA pinning (download-artifact + pypa publish)",
       "public-profile-contract.md status ACCEPTED (R1 + R2 qualified)",
       "approved-export-allowlist.json regenerated — 111/111 SHA256, 0 mismatches",
