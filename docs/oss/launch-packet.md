@@ -41,12 +41,14 @@ GO-PUBLIC-CODE is **COMPLETE**. The public candidate has **111 tracked files** (
 
 ## Artifacts (0.5.1rc1)
 
-| Artifact | Notes |
-|----------|-------|
-| `universal_agent_middleware-0.5.1rc1-py3-none-any.whl` | [GitHub Release v0.5.1rc1](https://github.com/openjay/universal-agent-middleware/releases/tag/v0.5.1rc1) + [PyPI 0.5.1rc1](https://pypi.org/project/universal-agent-middleware/0.5.1rc1/) |
-| `universal_agent_middleware-0.5.1rc1.tar.gz` | GitHub Release + PyPI; includes tests/ via MANIFEST.in |
+| Artifact | SHA256 | Source |
+|----------|--------|--------|
+| `universal_agent_middleware-0.5.1rc1-py3-none-any.whl` | `e33c5d219746adb0cc63ca83bf879a9cafbb84e9194e1627b339f50e31df1701` | [GitHub Release v0.5.1rc1](https://github.com/openjay/universal-agent-middleware/releases/tag/v0.5.1rc1) + [PyPI 0.5.1rc1](https://pypi.org/project/universal-agent-middleware/0.5.1rc1/) |
+| `universal_agent_middleware-0.5.1rc1.tar.gz` | `6a9c2dbfd1728d117440229f396dea1d11f685a6fbe5932c6f4d473578b7079b` | GitHub Release + PyPI; includes tests/ via MANIFEST.in |
 
-PyPI publish **COMPLETE** (2026-09-05): `pip install universal-agent-middleware==0.5.1rc1` verified — 19 tools in `tool_contract.json`, `uam --help` OK. Future releases may use OIDC trusted publishing (`release.yml` → environment `pypi`).
+**Provenance:** RC1 PyPI upload used a locally-built artifact pair (API token; not CI OIDC). GitHub Release assets were realigned to match PyPI byte-for-byte (2026-09-05). CI attestation in `release.yml` applies to future OIDC publishes; see `supply_chain` in `docs/oss/private-scan-coverage.json`.
+
+PyPI publish **COMPLETE** (2026-09-05): `pip install universal-agent-middleware==0.5.1rc1` verified — 19 tools in `tool_contract.json`, `uam --help` OK. Future releases should use OIDC trusted publishing (`release.yml` → environment `pypi`).
 
 ## Allowlist manifest
 

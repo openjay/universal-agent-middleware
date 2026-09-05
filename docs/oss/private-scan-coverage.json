@@ -50,14 +50,25 @@
     "published_at": "2026-09-05T08:52:00Z",
     "install_verified": true,
     "tool_count": 19,
-    "go_distribution": "COMPLETE"
+    "go_distribution": "COMPLETE",
+    "artifact_hashes": {
+      "wheel": "e33c5d219746adb0cc63ca83bf879a9cafbb84e9194e1627b339f50e31df1701",
+      "sdist": "6a9c2dbfd1728d117440229f396dea1d11f685a6fbe5932c6f4d473578b7079b"
+    },
+    "github_pypi_byte_alignment": "verified 2026-09-05 (release assets replaced to match PyPI)"
   },
   "supply_chain": {
     "workflow_action_pinning": "100% 40-char commit SHAs in ci.yml and release.yml",
     "release_yml_fixes": [
       "actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093",
       "pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc"
-    ]
+    ],
+    "pypi_0.5.1rc1_provenance": {
+      "method": "manual_api_token_upload",
+      "build_location": "local",
+      "ci_oidc_used": false,
+      "attestation_note": "release.yml attestation applies to future OIDC publishes; RC1 predates trusted-publisher wiring"
+    }
   },
   "findings_summary": {
     "blockers_for_public_flip": [],
@@ -68,6 +79,7 @@
       "public-profile-contract.md status ACCEPTED (R1 + R2 qualified)",
       "approved-export-allowlist.json regenerated — 111/111 SHA256, 0 mismatches",
       "GO-DISTRIBUTION complete — PyPI 0.5.1rc1 live, pip install verified, 19 tools",
+      "GitHub Release assets realigned to PyPI byte hashes (wheel e33c5d21…, sdist 6a9c2dbf…)",
       "Path 1 genesis procedure documented in launch-packet.md"
     ],
     "resolved_in_oss45": [

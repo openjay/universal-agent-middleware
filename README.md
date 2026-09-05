@@ -27,26 +27,85 @@ A new conversation can read live repository state — HEAD, branch, files, diffs
 
 ## Quick start
 
-```bash
-# Install
-python -m venv .venv && source .venv/bin/activate
-pip install -e ".[mcp]"
+### 1. Install from PyPI
 
-# Register workspaces
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install universal-agent-middleware==0.5.1rc1
+```
+
+Or download the exact wheel/sdist from [GitHub Release v0.5.1rc1](https://github.com/openjay/universal-agent-middleware/releases/tag/v0.5.1rc1) (byte-identical to PyPI).
+
+### 2. Register workspaces
+
+```bash
 cp config/workspaces.example.json config/workspaces.json
 # Edit workspace roots to match your machine
 
 # Optional: root scope registry for autonomous discovery
 cp examples/root_scopes.example.json config/root_scopes.json
+```
 
-# Local MCP smoke test
+### 3. Connect your MCP client
+
+UAM exposes **19 read-only tools** over MCP stdio (`session-read` profile). Point your client at:
+
+```text
+uam mcp-sdk-stdio --profile session-read \
+  --registry /path/to/workspaces.json \
+  --state-dir ~/.local/share/uam
+```
+
+**Cursor** — add to `.cursor/mcp.json` (or global MCP settings):
+
+```json
+{
+  "mcpServers": {
+    "uam": {
+      "command": "uam",
+      "args": [
+        "mcp-sdk-stdio",
+        "--profile", "session-read",
+        "--registry", "/path/to/workspaces.json",
+        "--state-dir", "/Users/you/.local/share/uam"
+      ]
+    }
+  }
+}
+```
+
+**Claude Desktop** — add to `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "uam": {
+      "command": "uam",
+      "args": [
+        "mcp-sdk-stdio",
+        "--profile", "session-read",
+        "--registry", "/path/to/workspaces.json",
+        "--state-dir", "/Users/you/.local/share/uam"
+      ]
+    }
+  }
+}
+```
+
+**ChatGPT** — requires an outbound MCP tunnel (Developer Mode). Configure tunnel credentials via environment only; see `docs/adapters/MCP.md` and `docs/day1a/TUNNEL_RUNBOOK.md`.
+
+### 4. Smoke test (optional)
+
+```bash
 echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2026-07-28","capabilities":{},"clientInfo":{"name":"test","version":"1.0"}}}' | \
   uam mcp-sdk-stdio --profile session-read \
     --registry config/workspaces.json \
     --state-dir ~/.local/share/uam
 ```
 
-For remote clients, configure an outbound MCP tunnel using your platform credentials. See `docs/adapters/MCP.md`.
+### Developer install
+
+Contributors may use `pip install -e ".[mcp]"` from a git checkout instead of the PyPI release above.
 
 ## Available MCP tools
 
