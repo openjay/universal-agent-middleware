@@ -1,0 +1,7 @@
+{
+  "kind": "UAM_SOURCE_PROVENANCE_POINTER_V2",
+  "product": "Universal Agent Middleware",
+  "version": "0.5.1rc1",
+  "source_identity": "Git commit and its exact tree",
+  "serving_provenance": "RELEASE_MANIFEST.json generated from a clean Git archive by the installer"
+}

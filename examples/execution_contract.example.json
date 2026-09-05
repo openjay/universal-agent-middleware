@@ -1,0 +1,19 @@
+{
+  "profile": "repository-change-v1",
+  "contract_id": "example-task-001",
+  "workspace_id": "myproject",
+  "base_revision": "EXACT_GIT_SHA",
+  "objective": "Implement one bounded repository change.",
+  "non_goals": ["No deployment", "No authority expansion"],
+  "authoritative_paths": ["AGENTS.md", "docs/plan.md"],
+  "allowed_change_paths": ["src/example.py", "tests/test_example.py"],
+  "constraints": ["Do not broaden scope"],
+  "implementation_decision": "Apply the smallest patch consistent with the authoritative paths.",
+  "expected_changes": ["Behavior corrected", "Regression test added"],
+  "acceptance_criteria": ["Target test passes", "No out-of-scope files changed"],
+  "verification_commands": ["python -m unittest tests.test_example"],
+  "risk_notes": [],
+  "rollback": ["Revert the bounded patch"],
+  "open_questions": [],
+  "created_by": "reasoning-client"
+}

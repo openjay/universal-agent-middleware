@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "universal-agent-middleware",
+  "version": "0.2.0",
+  "description": "Portable Agent Plugin adapter for Universal Agent Middleware workspace observation and bounded execution handoff.",
+  "author": {"name": "OpenJay"},
+  "license": "MIT",
+  "keywords": ["agent-middleware", "mcp", "agent-skills", "interoperability", "execution-handoff"]
+}

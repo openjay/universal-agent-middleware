@@ -1,0 +1,679 @@
+{
+  "schema": "UAM_APPROVED_EXPORT_ALLOWLIST_V1",
+  "status": "ACCEPTED",
+  "baseline_commit": "7fb48876e67fe2cd32aa65b9a4099bdfe8c2c3ae",
+  "generated_at": "2026-09-05T08:05:03Z",
+  "source_inventory": "git ls-files @ baseline_commit",
+  "dispositions_included": [
+    "PUBLIC_CANDIDATE"
+  ],
+  "file_count": 111,
+  "files": [
+    {
+      "path": ".github/CODEOWNERS",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "75c7e36a7d9abc90d48f6882eba2cafbd6be931009d23f9705382e4e20e46b03",
+      "owner_role": "CORE"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/bug_report.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "2a16763aa8a7557bbf2454bcfe4fdf5585e6a23105f68c46088c3092f319a6f3",
+      "owner_role": "CORE"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/feature_request.yml",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "834b7bec91fba8a25bcc9905e11d1565ff5b167022de29662ebfe33f8976af53",
+      "owner_role": "CORE"
+    },
+    {
+      "path": ".github/PULL_REQUEST_TEMPLATE.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "bb7cb7a234687a08a6cd9aaa226a79a7981513984c5ccf4110b51170bece2bb3",
+      "owner_role": "CORE"
+    },
+    {
+      "path": ".github/dependabot.yml",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "3e4ec7351fa600d0bacb836b0fc641ada1015fb4c902cbdc21af1e215aea7670",
+      "owner_role": "CORE"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "8d720d39999cf1be97afa2760583109c680ae2979dddcefc39c566b3f97fce26",
+      "owner_role": "CORE"
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "7c2f401426507b810f32aef471fe8827f5a2cc59d584e772f15328f331f24d23",
+      "owner_role": "CORE"
+    },
+    {
+      "path": ".gitignore",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "252777a09d2a0b47db89769132a7542f04be49251e73428b70d2c15de8f118e8",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "5385ff0d721da273c2b661a7b2f1fbf8b75f92094ba41dd23dd2ab7d4d084019",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "CODE_OF_CONDUCT.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "c5856c24a4c31e23a2995e80eeefb5fb99fa2e2564a76a1c42a1010f3c0b07a8",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "438ee229bbfc1b232c7215426a355f70dcb42d25e2439cd2cbe65fd53c363b28",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "GOVERNANCE.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "675f05f7d7322dde8c653e03d65048bbf5672d0adfcee3b02d0a3f79c2b9f0b9",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "LICENSE",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "7b2e7848cfaf2055275953fb1a0d303068def2d20f26044973ef4111f31f7563",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "MANIFEST.in",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "6528bd5b686d51ec384c9c4cec2f216eb92366b47dbc04d1c44f7e2b25fe93f1",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "MANIFEST.json",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "c984bd1c2d5c4dfc0bdb8f164fd209b949ba05a2cb2891f900e020209fbda3a9",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "README.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "15e5ca87ce394506a0a56bd02244fafec31bf7e42ead2632c0687ef005910f62",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "ROADMAP.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "4419fcbc2b75b0acfeb88204987884a1cc24d34442375c7338fabc1aae745454",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "SECURITY.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "b4d869ec23dec3728a3a3feb831d936bc3f54cb2424f341ebd1a2871dd1a8747",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "adapters/README.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "9967878fa602127085e317c587aa4a771ac8a58bca463889089474b9be0d3491",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "adapters/agent-plugin/universal-agent-middleware/mcp.json",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "a055e268321527ebe2fca0fc704f9f92fc79e157d8698a79cbb732e479f65166",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "adapters/agent-plugin/universal-agent-middleware/plugin.json",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "d51150d65902218c97b7d807cb26f79ac57e1d66e170e678819dbb79c14773ef",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "adapters/agent-plugin/universal-agent-middleware/skills/uam-research-handoff/SKILL.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "7b351984d8c9fe62c49e361da9fd6e35eaaf71783d66ad1ffbef3c9cdb5c0d83",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "adapters/http/openapi.json",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "85ce155bec74908da3b96681ff7726b41993d7fd13c243b27cd7c4dda4ebe250",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "adapters/openai/chatgpt-actions.openapi.json",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "aceb3b0089598468805b74bc16cbefe592000192ede8c4eedf9a1ed49883ee6f",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "config/workspaces.example.json",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "25f8e84ad5e96d6efad7bcf432bec3ba433dc9d429d0604820efe5625b310298",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/ADAPTER_MODEL.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "ab16d65ec8c8477a0f47b725f959559337da935b8fff536ae7a51b46965c8485",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/AI_EXECUTION_LOOP.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "8250525e35e6b5ecc430d6f0aefe390274ad62c0009ff6f76c416744522a9ebe",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "f34c21c8785878e2fa7207a2cdbf070323a1e37d057941f219e7dbb91a1e713a",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/BACKLOG.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "3c032165597c4a7f314be66abc47484d5a014ebbab01bd4d4cd612c4a90d1f04",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/INTEROPERABILITY_MATRIX.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "595fc5cadcf74236c05d9cd56e2c5f44e15d5c0dc2189b8cfe4ace3ea663d551",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/NAMING_AND_SCOPE.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "01e46b28ea22bebb64f099d04b106e000f133272532e590f517dc814f9fcb48f",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/PLAN.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "2e7ea4543a2953be2e831cf65918c89f60f6d95a3ab85abb4bb00d4179b6c29a",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/REALITY_PREAMBLE.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "305f3668332cc2f102fb1cd2f513baf4d092eec7e26445172d05c43defdbf5ed",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/SECURITY_MODEL.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "069735a9da79e203f029e03a43c0d046c0408ca8478bb48d99fa37c892553b6f",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/SSOT.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "fc762726cd3227454b2f5a95a34b762f7b955212dcc532b624e0bd2d2d5285d3",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/STANDARDS_ALIGNMENT.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "6e477eb6a59ccfdfede6bb4ef4a495e1cbfef1b978b6e3663f063bb28bc1ff8d",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/adapters/AGENT_PLUGINS.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "a4dda08a1af549c701a9b76ded73bab056e957b6e0b2d1735e551425744bdf9e",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/adapters/MCP.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "a26d2bb5bc8a9f550d44682c914ede9c78f3a95237f092341158307b60f2b838",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/adapters/OPENAI_CHATGPT_ACTIONS.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "4adb115c8d124c2f2785bd5b10c5974eb65e3f3479af5d4ce17cd44d8c937a15",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/oss/approved-export-allowlist.json",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "153a0369432880388578e8e79bc9eb4f16b1d8dd48803b3219ce2efedc75bc4d",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/oss/launch-packet.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "d0226b8c692140a7d374cc6a304d6bd55fe4f009a240187c6186719574c7dc4c",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/oss/license-decision.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "16392d0717cd1c43e00e951477458cdb3c14f1aa767355a62b4f1c68af85c788",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/oss/private-scan-coverage.json",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "827e553946b8b91c6fa70ca99546df9fee37dd4ba9874c8daaa79eeaa5e6df03",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/oss/public-profile-contract.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "5802d4684e9aafe8146d7f322e9edc68b4360f4f4fe36bd81cc99b0533bdd42a",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/oss/repo-strategy-note.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "19ea5748b6bb7a43def854c84e7ba12bbfbeec992c82ae641a6a795228f909bc",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "docs/oss/test_invariants.csv",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "dc8c50a25ecd3bdba1e422e69341d10a3e592a66f8931f2a66fbdb0eb9232fc4",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "examples/execution_contract.example.json",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "e8595bc2c83d6f75c845d38853605e64c1fe669acfcaebe1a1cc5d7aa8ea8cc4",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "examples/root_scopes.example.json",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "00e359684b03b5141ee9af099ded550216940327a1a23fc3ef778ecf61f2601c",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "pyproject.toml",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "58f020db594c5faea31da9e7c6c925ed10db4be47a36d302c5ca0eae206492b4",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "schemas/execution-contract-v1.schema.json",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "35bbff5bb1f73f889259e65a36c0bec2d55fa95bd402d0e7d554ed3ae07b47d4",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "schemas/executor-result-v1.schema.json",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "de56550b02a66e9c202b67a7928e395dfcd69ddb1c2d55818cf2b0d68dce72e2",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "schemas/workspace-registry-v1.schema.json",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "69a2f554f858383a588210a523101cb289a192541d83b98d5b17c01503fd8243",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "scripts/hardening_stage_rehearsal.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "c1b9ab77f832c142ba089bbc3f7e05ca9d6642ea5f5b41f6382a286667bd059d",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/__init__.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "3888e0e9b30979bdc4dcc6ddef695101baf4d35b391164dc3d71cd753f6dc734",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/adapters/__init__.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "d96ed50edb9f6fca9cd8a783a8d1d672adb485c9debdff2150da62bf42432841",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/adapters/mcp_sdk.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "759c1f161db449c2fe8d110928e8f816664110b97841f2d65f2583df99a57626",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/adapters/openai_actions.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "26be709d6a84a458f2f508c229dc91db609ec76658c2c2a4d6a997ba43fe2f09",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/audit.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "837567918891bd7f61ddc9ff704ad70c9aa3f2e197223a1285cd9d5cc90a8748",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/cli.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "4ab78e11c6166a24a943bb6be7a571a0f3667dce2b11fd3c824beeaadd76e2df",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/contracts.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "0d59d235e10f350df810ced5e9729dccb2423c022812c8d1b0fbb016d7a8f700",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/discovery.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "83b97a538a6ccacea6e0c28a3e6351cc5a7d317a193b2c69bd36ad10fdec4153",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/doctor.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "0cc06e9256a1ecbe6c32cba3eca8c158b2db1e05823dff8bcd51bf7b9836de56",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/errors.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "1cd3844f274b8f34279de18fc7f265f6acc2befd8311c8ab49da169c1596f78d",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/executors/__init__.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "ea2d04afa5cab7e2e5d211fd725b548fa29aa197c7b259137c068b2e1d0763e4",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/exploration.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "742f507360f970875384b0649cf75e5237eb4eee3ef731d62602557a471a1f78",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/gateway.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "cb6d5091e0c9725f9b33097433f0cf50e98a4d3945ca6dbef15f5d1c16d215cb",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/git_readonly.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "b66a967fab35fbd03506794358ef76c1ba208cf106f5e2743d4aef7f40458b74",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/installer.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "fbefe90a5111e5a7e66ad4e92f847570d4ed2819c431ab18f7e5421e1ab6afb3",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/mcp.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "4c51d285f99d392de7223184c56996ae46e57d5daf59cb3ac1d869f354e41778",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/models.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "39496b1086c124b89e49c5e65ee958251fcd079ea6256184e03ae6fcffda9a54",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/openapi.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "7d6f2b6099539c7d6b23a10fb2453260824b5da80a9179efec6c5d7b57d7182d",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/policy.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "3f29cf926767965efba21538f0585749003153f2b54fcf2deb7cf68227fb576a",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/project.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "e76313269d6dcc6c3bf44c70f320c3782944a0c10a42b4e966e5e7f8b66430b3",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/results.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "a9758624e1d038764963acf443efeb618bd1656efb6ad61da6542e95b0d2627f",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/root_scope.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "48d7c8c4358cbdc26ec90db920af65e51bb4ab298b84df7fff739ea5c309fe6e",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/runtime.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "f826353e9f51e45afb670b3ed1c0be5ea60dcf6cfd34757aca3aa4ce25967d5b",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/server.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "08afcc1468be5a03bc98b5123969c4730649772dd6b2c7476abc6678fa47f5a2",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/service.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "c849f840079c242e39eae1caefd3145b04609d3b277cd0ae538393d946bfc789",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/supervisor.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "71e76ef0641f6033d10d28017401e3a19eac4f0f32031f3cfd279bad34cabeb4",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/tool_contract.json",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "bbdddfa4193e69494032347c77c3e3e184a47dc8f8ebd52a408c57bb45315874",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "src/universal_agent_middleware/workspace.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "606e1d8e7c42196e90ae654393f74416ecf4e69ce84f93eebc9505d5f7a3cee1",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/fixtures/freshness/README.md",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "ced0cbff649cb9463e5a4b0f3c18054860c55d5102bb169448ebcc56e669a1c6",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/fixtures/freshness/test.txt",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "81db67b6a5702b9b68f0016f061c409bf3fb16d062fc854d1b424bb4e9c28c56",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/fixtures/prompt_injection.txt",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "6fabec330383bf2d2b3111b1ae532ce3b72de7ba6ab92bd86c121bbc36b5657e",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/synthetic_fixtures.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "244681e4a6712b0ce8f89c44370c188fe6f209f938c40a0ea94f72dfdcae25da",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/test_agent_plugin_package.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "b554171ea0847abcbb3e3f2f4129ab5e1137d7c9c1ee4f48dee2462241385199",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/test_api_e2e.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "d91aaad8648f374a6f10975c593d555351d5fa35730b62d71cad049b8f8ee632",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/test_audit.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "159430d1db241b43cb72cf0b4bb7d9f6eb6987cae57dbf3ac365903eda7a52d1",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/test_broad_reality.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "2a6067b7d07d13da84dcf15ea56a48d82281a8e5e6e428ad15a9f4b145e047fe",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/test_contracts.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "376540a5148be7ebec297901f91438c93ee392cffa570ce8fdc0ec72c5c75c89",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/test_gateway_boundaries.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "c4158f1158a1020214b302e209611e8e98947f88f0a8f2debd441159fd2e571e",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/test_git_readonly.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "06ada3ad8b0c0c667f78fc5fd3ac2ec31a93a69ac34ce7291779f516358a5cca",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/test_hardening.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "38cd22ce7bb1a5dff9836423fe7389e14a3c935771d1b6dd634457367a6e34c5",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/test_local_executor.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "9f901fc363760da4419a3e0e4919c75f5938db87b54969637daec81dc07e0942",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/test_mcp.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "abf6223183155a221fc585db18768232000a9260d0c7245011b792003167d7dd",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/test_mcp_http.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "833f067d2f0580511f9eb523e76dac517787fa59c4ffc48e375c71c5ae1e48b0",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/test_mcp_sdk_adapter.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "60ce251e442fd2556c8ddeb1a33f2033c32384028385e6d31e9dab128ad51f68",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/test_openapi_contract.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "70d1d51936f861f65e9b7b959769e3d2a6557d183597e3a93c5ef7dd4a15a196",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/test_policy.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "b7f3e68d109e8681188038fd50febc4928159d78f2357562c4815623f17e5f98",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/test_real_workspace_e2e.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "1c2974489892d410bebfb948fc5c8ec278c8fa8f5488228208bd5fd95235da93",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/test_results.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "ab4b6ef53059e9359b97f87ef93560318a34b67ccbe711f924fc19490371f4a2",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/test_v032_acceptance.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "e59772ed10665beda5bd7e68931721adb276570edc48d677229c36ccbe821dee",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/test_vendor_neutrality.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "4dfb8ced9d08db591b900b4420cbd2fa24072093552209aba436ec9467288d32",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tests/test_workspace.py",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "d95e902e65ac6891bcba56f4b8ef07518126f4fb507ec77bb474792104d4b41c",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tools/system-service/config/recovery_policies.yaml",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "6870c4207d872a1fda8af625730df109282adb2b741ae05058f7afc01b0515e3",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tools/system-service/install.sh",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "96848c66ad88f25218221958c28f1b14e6c3df5235e7fd2c43310681d11c451d",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tools/system-service/plists/com.openjay.uam.supervisor.plist",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "931df3abca90d790ab1ecdccc2846cd94e2ad544887adcc772b63b86959df2c7",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tools/system-service/plists/com.openjay.uam.tunnel.plist",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "a56178f702d69762419d37302b33691b1b791fb81bbc8f121d006f064293b057",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tools/system-service/scripts/uam-setup-credential.sh",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "866a15029a9eff666ed23d30fab39a6dc1bc91716e1aa74835e847afc0aac180",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tools/system-service/scripts/uam-supervisor.sh",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "a0350cebc3955d326c561a1d8a4191d442dc2ab83475b65ef4957581117a9183",
+      "owner_role": "CORE"
+    },
+    {
+      "path": "tools/system-service/scripts/uam-tunnel-wrapper.sh",
+      "disposition": "PUBLIC_CANDIDATE",
+      "sha256": "7a32c27e7026e6488b89f98a79b8206d549d09f35be7c87b571dbe01354580d3",
+      "owner_role": "CORE"
+    }
+  ]
+}

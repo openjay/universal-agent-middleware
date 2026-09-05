@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "universal-agent-middleware"
+version = "0.5.1rc1"
+description = "Vendor-neutral local-first middleware for AI agent workspace observation, bounded execution handoff, and evidence review."
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "OpenJay"}]
+keywords = ["ai", "agents", "middleware", "interop", "mcp", "agent-skills", "agent-plugins", "openapi"]
+dependencies = []
+
+[project.optional-dependencies]
+mcp = ["mcp>=2.0.0,<3"]
+service = ["mcp>=2.0.0,<3", "PyYAML>=6.0,<7"]
+
+[project.scripts]
+uam = "universal_agent_middleware.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+universal_agent_middleware = ["tool_contract.json"]

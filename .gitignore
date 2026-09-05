@@ -1,0 +1,32 @@
+__pycache__/
+*.py[cod]
+.venv/
+.state/
+.coverage
+.pytest_cache/
+dist/
+build/
+*.egg-info/
+.DS_Store
+
+# Freshness test fixture has its own .git for UAM observation testing
+tests/fixtures/freshness/.git/
+config/workspaces.json
+config/root_scopes.json
+config/project-observation-profiles/
+config/workspace-contexts/
+
+# Private ops: evidence, archives, operator scripts, release provenance
+docs/archive/
+docs/day1a/
+docs/evidence/
+docs/programs/
+docs/EXECUTION_HISTORY.md
+docs/EXECUTION_LIST.md
+provenance/
+scripts/chatgpt_e2e_ground_truth.py
+scripts/create_contract.py
+scripts/full_loop_e2e.py
+scripts/gate_d_tunnel_setup.sh
+scripts/gate_e_verify.py
+scripts/observation_e2e.py

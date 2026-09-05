@@ -1,0 +1,38 @@
+{
+  "schema_version": "root-scope-registry-v1",
+  "scopes": [
+    {
+      "scope_id": "home",
+      "root": "/path/to/home",
+      "description": "Broad discovery-only zone (metadata and inventory only)",
+      "authority": {
+        "discover": true,
+        "metadata_read": true,
+        "content_read": false,
+        "text_search": false,
+        "git_observe": false,
+        "classify": false,
+        "index": false,
+        "relate": false,
+        "auto_admit": false
+      }
+    },
+    {
+      "scope_id": "code",
+      "root": "/path/to/your/code",
+      "description": "Developer code root with read-only observation authority",
+      "authority": {
+        "discover": true,
+        "metadata_read": true,
+        "content_read": true,
+        "text_search": true,
+        "git_observe": true,
+        "classify": true,
+        "index": true,
+        "relate": true,
+        "auto_admit": true
+      }
+    }
+  ],
+  "overrides": {}
+}

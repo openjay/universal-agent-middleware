@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      mcp-ecosystem:
+        patterns:
+          - mcp
+          - PyYAML
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

@@ -1,0 +1,72 @@
+{
+  "schema": "UAM_PRIVATE_SCAN_COVERAGE_V1",
+  "status": "FINAL_CONVERGENCE_PUSH_PENDING",
+  "task_id": "OSS-022",
+  "checked_at": "2026-09-05T08:15:00Z",
+  "baseline_commit": "pending_post_commit",
+  "scope": "public candidate working tree after final convergence (Steps 1-4)",
+  "tracked_file_count": 111,
+  "not_scanned": [
+    "GitHub Actions logs/artifacts/caches",
+    "GitHub Issues/PR attachments",
+    "Git LFS objects",
+    "Release assets on GitHub",
+    "Full git history (40+ commits) — not exported under Path 1 clean genesis",
+    "Remote refs beyond origin/master"
+  ],
+  "secret_patterns": {
+    "live_credentials_found": false,
+    "triaged": "Historical commits contain placeholder API key strings only"
+  },
+  "personal_path_patterns": {
+    "working_tree_src_tests": 0,
+    "working_tree_tracked_public_docs": 0,
+    "private_retain_files": "untracked via .gitignore; retained locally",
+    "triaged": "39 PRIVATE_RETAIN paths removed from git index; src/ and tests/ clean"
+  },
+  "ci_qualification": {
+    "workflow": "Portable regression and wheel",
+    "run_id": null,
+    "matrix_cells": 8,
+    "matrix_passed": 8,
+    "platforms": [
+      "ubuntu-latest",
+      "macos-latest"
+    ],
+    "python_versions": [
+      "3.11",
+      "3.12",
+      "3.13",
+      "3.14"
+    ],
+    "conclusion": "pending_post_push",
+    "qualified_at": null
+  },
+  "supply_chain": {
+    "workflow_action_pinning": "100% 40-char commit SHAs in ci.yml and release.yml",
+    "release_yml_fixes": [
+      "actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093",
+      "pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc"
+    ]
+  },
+  "findings_summary": {
+    "blockers_for_public_flip": [
+      "GO-PUBLIC-CODE authorization pending (Path 1 clean genesis export)",
+      "PyPI Trusted Publisher OIDC configuration (GO-DISTRIBUTION hold)",
+      "GitHub security controls readback after public repo creation (O6/O9 post-public)"
+    ],
+    "resolved_in_final_convergence": [
+      "release.yml action SHA pinning (download-artifact + pypa publish)",
+      "public-profile-contract.md status ACCEPTED (R1 + R2 qualified)",
+      "approved-export-allowlist.json regenerated — 111/111 SHA256, 0 mismatches",
+      "Path 1 genesis procedure documented in launch-packet.md"
+    ],
+    "resolved_in_oss45": [
+      "OSS-SEC-001 pre-read boundary with rg exclusion globs and disjoint sub-roots",
+      "MANIFEST.in sdist test inclusion (200 tests collected from sdist)",
+      "CI action SHA pinning and ripgrep installation on all matrix cells",
+      "Release workflow split into build (no OIDC) and publish (OIDC) jobs",
+      "Version bump to 0.5.1rc1; docs aligned to Path 1 clean public genesis"
+    ]
+  }
+}

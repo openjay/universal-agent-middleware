@@ -1,0 +1,19 @@
+---
+name: Feature request
+about: Suggest an idea for UAM
+title: ''
+labels: enhancement
+assignees: ''
+---
+
+## Problem
+
+What problem does this solve?
+
+## Proposed solution
+
+Describe the approach. Note if it affects the Public Preview contract in `docs/oss/public-profile-contract.md`.
+
+## Alternatives considered
+
+## Additional context

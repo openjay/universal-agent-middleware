@@ -1,0 +1,50 @@
+{
+  "schema": "UAM_RECOVERY_POLICIES_V2",
+  "doctor_timeout_seconds": 30,
+  "policies": {
+    "audit_integrity_failure": {
+      "severity": "P0",
+      "action": "freeze",
+      "auto_repair": false
+    },
+    "credential_security_failure": {
+      "severity": "P0",
+      "action": "freeze",
+      "auto_repair": false
+    },
+    "recovery_state_failure": {
+      "severity": "P0",
+      "action": "freeze",
+      "auto_repair": false
+    },
+    "release_manifest_failure": {
+      "severity": "P0",
+      "action": "freeze",
+      "auto_repair": false
+    },
+    "restart_storm": {
+      "severity": "P0",
+      "action": "freeze",
+      "auto_repair": false
+    },
+    "runtime_path_failure": {
+      "severity": "P0",
+      "action": "freeze",
+      "auto_repair": false
+    },
+    "tunnel_unavailable": {
+      "severity": "P1",
+      "action": "restart_tunnel",
+      "max_attempts": 3,
+      "window_seconds": 900
+    },
+    "core_semantic_failure": {
+      "severity": "P1",
+      "action": "log_only"
+    },
+    "workspace_degraded": {
+      "severity": "P2",
+      "action": "log_only"
+    }
+  }
+}

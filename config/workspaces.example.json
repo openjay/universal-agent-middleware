@@ -1,0 +1,30 @@
+{
+  "registry_version": "uam-workspace-registry-v1",
+  "workspaces": [
+    {
+      "workspace_id": "myproject",
+      "project_id": "myproject",
+      "role": "canonical-main",
+      "repository_identity": "yourorg/myproject",
+      "label": "My Project (main)",
+      "root": "/path/to/your/project",
+      "kind": "git-repository",
+      "capabilities": ["filesystem.read", "git.observe"],
+      "max_file_bytes": 524288,
+      "max_search_files": 5000,
+      "discovery": {"git_worktrees": true}
+    },
+    {
+      "workspace_id": "myproject-feature",
+      "project_id": "myproject",
+      "role": "active-candidate",
+      "repository_identity": "yourorg/myproject",
+      "label": "My Project (feature branch)",
+      "root": "/path/to/your/project-feature-branch",
+      "kind": "git-repository",
+      "capabilities": ["filesystem.read", "git.observe"],
+      "max_file_bytes": 524288,
+      "max_search_files": 5000
+    }
+  ]
+}

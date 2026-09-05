@@ -1,0 +1,21 @@
+{
+  "uam_discover_projects": "ab9c248a4256b23c0aa016e391f18e3e64925b6cb6a3c49c52a1b96b355bb65b",
+  "uam_explain_coverage": "4a82ad4d8c43fcf6befdd059715fe52fad181dc98c9846fc0da88a6d7cdac12e",
+  "uam_explore": "db501cb5ace418d6e848c231349a7531c3c00e70735e0ec86bc2e4b3ce6197af",
+  "uam_git_diff": "debab4ad442e53acf4eb896d20a63b29a3b1755f30ca2c86c2b9719e837806ed",
+  "uam_git_log": "b6d8252b0f9ebf14a6c6a1153144ea1be4e2eb9af48f88b805ff67e6b1e14067",
+  "uam_git_status": "3013845f2c79266907d896ca761188e6d1f2d6a06af56ae149c6eced7a50f13f",
+  "uam_list_project_instances": "d0a59e1c8130458fd1a067d77c0ace81f7a97a0f323d50cd439cbb43fed3ecfc",
+  "uam_list_scopes": "35065426ccdf1e3f5430811c3aa1dccf601112c70b6d019568cd5759ae689b93",
+  "uam_list_workspaces": "2b84b27b3562be6ca18d3fcc03bee0dc2985e54b825dec40065ee97d3395af88",
+  "uam_project_reality": "1a02d7bb43a54b39efb6af5c3ffbc62c5cbf55ed12b24f058589b9aff877b69b",
+  "uam_read_file": "8694bf17b00024141831f21ce894a8557ed4da024c573ba9eb507a27d2cce4eb",
+  "uam_scope_inventory": "b12e7b9f0513cc9f0d52c549b5186f59b868f2ed763eeffcdba8e756bd4b615b",
+  "uam_search_scope": "3063a3b40e97c53d27c45482306c44c0b1107a02df0ef308b50f614bbaea3ade",
+  "uam_search_text": "04c431df55b824d7158fef537554f1bdd1c1ffeb8e045e176dfa1f7050d77e36",
+  "uam_session_bootstrap": "4dffa99e7bd2b58f82849ff8f4fc5107f581f7dd9ca865b617101f2e85164b07",
+  "uam_tree": "62a4e6c770ea19ccb91c0c41816e3b3efe0d6389b29103a01f06b36a7d706ed8",
+  "uam_verify_audit": "9bd4514ce89407dc35ef3c7551f801afbe25679d308123d3456ea66791c7f958",
+  "uam_what_am_i_missing": "cb4579b1054b3f5dc551200e1def169171ed2b52def58da1652708da536a9f76",
+  "uam_workspace_snapshot": "af974d7e10848606588d4c7ebf071093555f9c797cd35b0f3f3f24eab0f6b5a5"
+}
