@@ -48,8 +48,9 @@ from universal_agent_middleware.harness_adapter import (
 from universal_agent_middleware.task_control import TaskControlError
 
 from consumer_world import CONSUMER, rule_for
+from escaped_helper import adopting_orphans, end_helper, is_there
 from test_consumer import ConsumerCase
-from test_consumer_unconfirmed_stop import FAKE_SERVER, FakeCodex, helper_of, is_there, kill_helper, kill_helpers, wait_until
+from test_consumer_unconfirmed_stop import FAKE_SERVER, FakeCodex, helper_of, kill_helpers, wait_until
 
 ADVISORY_PHASES = ("WAITING_OLD_EXECUTOR", "ATTEMPT_LEFT_OPEN")
 
@@ -122,6 +123,7 @@ class ServerThatHasExitedTest(unittest.TestCase):
         (codex_home / "fake.json").write_text(json.dumps({"log": str(log), **settings}), encoding="utf-8")
         spec = CodexServerSpec(argv=(sys.executable, str(FAKE_SERVER)), codex_home=str(codex_home), home=str(home))
         client = CodexAppServerClient(spec, cwd=str(self.cwd))
+        self.enterContext(adopting_orphans())  # entered first, left last: the cleanups below still find this process the adopter
         self.addCleanup(kill_helpers, log)
         self.addCleanup(client.close)
         client.start()
@@ -231,8 +233,7 @@ class ServerThatHasExitedThroughTheConsumerTest(FakeCodex, ConsumerCase):
         helper = helper_of(log, spawn_pid)
         self.assertTrue(is_there(helper), "the child that escaped into its own session is alive")
         self.assertEqual(self.advisories(delivery_id), [("ATTEMPT_LEFT_OPEN", "EXECUTOR_EXITED_BEFORE_OBSERVATION")])
-        kill_helper(helper)
-        wait_until(lambda: not is_there(helper))
+        end_helper(helper)
         self.life(rules, adapter)  # a later life with a healthy ps: every recorded identity is gone, which proves nothing
         self.assertStillOpen(delivery_id)
         self.assertEqual(self.advisories(delivery_id), [("ATTEMPT_LEFT_OPEN", "EXECUTOR_EXITED_BEFORE_OBSERVATION")])

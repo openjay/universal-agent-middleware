@@ -64,7 +64,7 @@
     "unexpected_hits": 0
   },
   "schema": "UAM_PRIVATE_SCAN_COVERAGE_V2",
-  "scope": "226 tracked files: the 0.6.3 tree before the three generated documents in `excluded_generated` were added (they hold hashes, paths and prose about this scan); the final tree and the release artifacts are scanned again at release time",
-  "tracked_file_count_final": 229,
-  "tracked_file_count_scanned": 226
+  "scope": "228 tracked files: the 0.6.3 tree before the three generated documents in `excluded_generated` were added (they hold hashes, paths and prose about this scan); the final tree and the release artifacts are scanned again at release time",
+  "tracked_file_count_final": 231,
+  "tracked_file_count_scanned": 228
 }

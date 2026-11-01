@@ -69,9 +69,13 @@ THIRD = "executor-f"
 # The surface of the seven first-batch tools as a client sees it, measured on the pristine first-batch tree
 # (name, description, input schema, annotations and every other field the SDK reports; `exclude_none`,
 # canonical JSON, SHA-256) with the acting principal `requester-a`. A change here is a change of what a
-# client that already attached to `task-control` is told: it has to be a decision, not a side effect. The
-# SDK version in use (mcp 2.0.0) is part of the measurement: if the SDK reports a tool differently, this
-# fails and the surface has to be measured again on both trees.
+# client that already attached to `task-control` is told: it has to be a decision, not a side effect.
+# Measured with mcp 2.0.0 on Python 3.14; the digests also hold with mcp 2.3.0, which is what CI resolves
+# under `mcp>=2.0.0,<3` (an SDK that reports a tool differently still fails this, and the surface has to be
+# measured again on both trees). The interpreter is part of the measurement through one field only: the
+# SDK serves a tool's docstring as its description, 3.13+ strips the indentation the source gives it at
+# compile time and 3.11/3.12 keep it (see `as_python_313_compiles_a_docstring`; tests/profile_declaration.py
+# records the same difference for the 20-tool surface). The digests are those of the stripped form.
 FROZEN_FIRST_BATCH_TOOLS = {
     "uam_attempt_end": "e27d3802e79fc9fa0d36455af81faf43b38e9ea7512a28731c921de98afad23a",
     "uam_attempt_result": "8f5fbde9f0bdcec9083dfd26cb9db6d3dc34892e106784a9af9b51efaf1c8e20",
@@ -104,8 +108,115 @@ def canonical(data: Any) -> str:
     return json.dumps(data, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
 
 
+def as_python_313_compiles_a_docstring(text: str) -> str:
+    """A docstring as CPython 3.13+ makes it at compile time (gh-81283), applied to the text 3.11 and 3.12 keep as written.
+
+    The first line loses its leading spaces and every other line loses the indentation they all share, as ``inspect.cleandoc``
+    would, but leading and trailing blank lines stay: only leading spaces are touched, never a word, a line break, a trailing
+    space or the final newline. On text that is already stripped (3.13+) it changes nothing."""
+    lines = text.expandtabs().split("\n")
+    margin = min((len(line) - len(line.lstrip(" ")) for line in lines[1:] if line.strip(" ")), default=0)
+    return "\n".join([lines[0].lstrip(" "), *(line[min(margin, len(line) - len(line.lstrip(" "))):] for line in lines[1:])])
+
+
+def served_form(tool: Any) -> dict[str, Any]:
+    """Everything the client was told about one tool, with the description in the one form every supported Python gives it."""
+    payload = tool.model_dump(mode="json", exclude_none=True)
+    if isinstance(payload.get("description"), str):
+        payload["description"] = as_python_313_compiles_a_docstring(payload["description"])
+    return payload
+
+
 def digest_of(tool: Any) -> str:
-    return hashlib.sha256(canonical(tool.model_dump(mode="json", exclude_none=True)).encode("utf-8")).hexdigest()
+    return hashlib.sha256(canonical(served_form(tool)).encode("utf-8")).hexdigest()
+
+
+def field_report(tool: Any) -> dict[str, Any]:
+    """For a mismatch only: the text of every string field of what the client was told and a short digest of each other field."""
+    return {
+        field: value if isinstance(value, str) else hashlib.sha256(canonical(value).encode("utf-8")).hexdigest()[:12]
+        for field, value in sorted(served_form(tool).items())
+    }
+
+
+class TheDescriptionAsTheInterpreterGivesItTest(unittest.TestCase):
+    """What ``as_python_313_compiles_a_docstring`` removes (leading docstring indentation, nothing else) and what must still show."""
+
+    SOURCE_DOC = "Recipient only: do it.\n\n        `x` is the first,\n          `y` a deeper line.\n        \n        Last line.\n        "
+    STRIPPED = "Recipient only: do it.\n\n`x` is the first,\n  `y` a deeper line.\n\nLast line.\n"
+    FIELDS = {"name": "t", "description": STRIPPED, "input_schema": {"type": "object", "properties": {}}, "annotations": {"read_only_hint": True}}
+
+    class Told:
+        """A stand-in for one SDK tool: only ``model_dump`` is used, so the check does not depend on the SDK's model classes."""
+
+        def __init__(self, payload: dict[str, Any]) -> None:
+            self.payload = payload
+
+        def model_dump(self, *, mode: str, exclude_none: bool) -> dict[str, Any]:
+            assert (mode, exclude_none) == ("json", True)
+            return json.loads(json.dumps(self.payload))
+
+    def test_it_strips_the_indentation_the_source_gives_and_keeps_every_other_character(self) -> None:
+        self.assertEqual(as_python_313_compiles_a_docstring(self.SOURCE_DOC), self.STRIPPED)
+
+    def test_it_changes_nothing_on_text_that_is_already_stripped_and_is_idempotent(self) -> None:
+        self.assertEqual(as_python_313_compiles_a_docstring(self.STRIPPED), self.STRIPPED)
+        for text in (self.SOURCE_DOC, "One line.", "T.\n\n", "T.\n        ", "  T.\n    a\n  b"):
+            with self.subTest(text=text):
+                once = as_python_313_compiles_a_docstring(text)
+                self.assertEqual(as_python_313_compiles_a_docstring(once), once)
+
+    def test_the_edges_of_what_it_does(self) -> None:
+        for text, expected in (
+            ("One line.", "One line."),
+            ("  Leading spaces.\n    a\n    b", "Leading spaces.\na\nb"),
+            ("T.\n\ttabbed\n\ttabbed", "T.\ntabbed\ntabbed"),
+            ("T.\n    a\n  b", "T.\n  a\nb"),
+            ("T.\n\n", "T.\n\n"),
+            ("T.\n        ", "T.\n        "),
+            ("T.\n      a  \n      b", "T.\na  \nb"),
+        ):
+            with self.subTest(text=text):
+                self.assertEqual(as_python_313_compiles_a_docstring(text), expected)
+
+    def test_it_is_what_this_interpreter_does_to_a_docstring(self) -> None:
+        """3.13+ strips at compile time and must give exactly the text above; 3.11/3.12 keep the text as written (the premise)."""
+        namespace: dict[str, Any] = {}
+        exec(f"def documented():\n    {self.SOURCE_DOC!r}\n", namespace)
+        self.assertEqual(namespace["documented"].__doc__, self.STRIPPED if sys.version_info >= (3, 13) else self.SOURCE_DOC)
+
+    def test_a_difference_that_is_not_leading_indentation_still_shows(self) -> None:
+        base = as_python_313_compiles_a_docstring(self.SOURCE_DOC)
+        for label, variant in (
+            ("another word", self.SOURCE_DOC.replace("deeper", "shallower")),
+            ("no final newline", self.SOURCE_DOC.rstrip()),
+            ("a blank line fewer", self.SOURCE_DOC.replace("\n        \n", "\n")),
+            ("a deeper line indented differently", self.SOURCE_DOC.replace("          `y`", "      `y`")),
+            ("a trailing space", self.SOURCE_DOC.replace("first,", "first, ")),
+            ("another first line", self.SOURCE_DOC.replace("Recipient only", "Requester only")),
+            ("a line break turned into a space", self.SOURCE_DOC.replace("first,\n          `y`", "first, `y`")),
+        ):
+            with self.subTest(label):
+                self.assertNotEqual(as_python_313_compiles_a_docstring(variant), base)
+
+    def test_the_digest_ignores_the_docstring_indentation_of_the_description_and_nothing_else_a_tool_says(self) -> None:
+        told = self.Told(self.FIELDS)
+        self.assertEqual(digest_of(self.Told({**self.FIELDS, "description": self.SOURCE_DOC})), digest_of(told))
+        for label, change in (
+            ("name", {"name": "u"}), ("title", {"title": "T"}), ("input schema", {"input_schema": {"type": "object", "properties": {"a": {}}}}),
+            ("output schema", {"output_schema": {"type": "object"}}), ("annotations", {"annotations": {"read_only_hint": False}}),
+            ("another field", {"meta": {"k": "v"}}), ("description", {"description": self.STRIPPED + "x"}),
+            ("description, indented", {"description": self.SOURCE_DOC.replace("deeper", "shallower")}),
+        ):
+            with self.subTest(label):
+                self.assertNotEqual(digest_of(self.Told({**self.FIELDS, **change})), digest_of(told))
+
+    def test_a_mismatch_report_gives_the_text_of_string_fields_and_a_digest_of_the_others(self) -> None:
+        report = field_report(self.Told({**self.FIELDS, "description": self.SOURCE_DOC}))
+        self.assertEqual(report["description"], self.STRIPPED)
+        self.assertEqual(report["name"], "t")
+        self.assertEqual(set(report), set(self.FIELDS))
+        self.assertTrue(all(len(report[field]) == 12 for field in ("input_schema", "annotations")))
 
 
 class ContinuityAdapterWorld(ContinuityWorld):
@@ -164,13 +275,28 @@ class TestSurface(ContinuityAdapterWorld):
         ))
         for label, surface in (("the first-batch server", first_batch), ("the successor server", successor)):
             with self.subTest(label):
+                served = {name: digest_of(surface.tools[name]) for name in TASK_CONTROL_TOOLS}
                 self.assertEqual(
-                    {name: digest_of(surface.tools[name]) for name in TASK_CONTROL_TOOLS}, FROZEN_FIRST_BATCH_TOOLS,
+                    served, FROZEN_FIRST_BATCH_TOOLS,
+                    {name: field_report(surface.tools[name]) for name in TASK_CONTROL_TOOLS if served[name] != FROZEN_FIRST_BATCH_TOOLS[name]},
                 )
                 instructions = surface.instructions or ""
                 self.assertTrue(instructions.startswith(f"UAM v{__version__} task-control (candidate), "), instructions[:80])
                 as_measured = instructions.replace(f"UAM v{__version__} ", f"UAM v{FROZEN_MEASURED_VERSION} ", 1)
                 self.assertEqual(hashlib.sha256(as_measured.encode("utf-8")).hexdigest(), FROZEN_FIRST_BATCH_INSTRUCTIONS)
+
+    def test_the_successor_says_the_same_as_the_first_batch_server_about_each_first_batch_tool_with_nothing_normalised(self) -> None:
+        """One interpreter and one SDK for both servers, so whatever the docstrings look like here they must agree, field by field."""
+        successor = asyncio.run(inspect_surface(self.requester))
+        first_batch = asyncio.run(inspect_surface(
+            create_task_control_server(self.control, principal=REQUESTER, northbound=self.gw.northbound),
+        ))
+        for name in TASK_CONTROL_TOOLS:
+            with self.subTest(name):
+                self.assertEqual(
+                    successor.tools[name].model_dump(mode="json", exclude_none=True),
+                    first_batch.tools[name].model_dump(mode="json", exclude_none=True),
+                )
 
     def test_the_first_batch_profile_does_not_gain_a_tool(self) -> None:
         first_batch = asyncio.run(inspect_surface(

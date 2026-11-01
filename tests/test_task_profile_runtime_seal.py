@@ -94,8 +94,10 @@ def world(runtime_fixture, tmp_path):  # noqa: F811
                    side_effect=lambda runtime: _validate_release(runtime, executing=False)):
             yield sealed
     finally:  # the latch kinds that take permissions away give them back, so the temporary tree can be removed
-        for locked in (sealed.latch, home / SEALED_AWAY):
-            if locked.exists() and not locked.is_symlink():
+        # The directory first, and a link is never followed: the `unsearchable_target` latch is a link into the directory that kind makes
+        # unsearchable, and `Path.exists()` follows a link (before 3.14 that raises PermissionError there; 3.14 reads it as absent).
+        for locked in (home / SEALED_AWAY, sealed.latch):
+            if not locked.is_symlink() and locked.exists():
                 locked.chmod(0o700)
 
 

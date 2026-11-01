@@ -6,11 +6,11 @@
     "unchanged": "in the public base with identical bytes"
   },
   "counts_by_change": {
-    "changed": 53,
-    "new": 117,
-    "unchanged": 58
+    "changed": 54,
+    "new": 119,
+    "unchanged": 57
   },
-  "file_count": 228,
+  "file_count": 230,
   "files": [
     {
       "change": "unchanged",
@@ -38,9 +38,9 @@
       "sha256": "3e4ec7351fa600d0bacb836b0fc641ada1015fb4c902cbdc21af1e215aea7670"
     },
     {
-      "change": "unchanged",
+      "change": "changed",
       "path": ".github/workflows/ci.yml",
-      "sha256": "8d720d39999cf1be97afa2760583109c680ae2979dddcefc39c566b3f97fce26"
+      "sha256": "9f027543288d9dbe374dc0d884049e6268d609a6a1e25f40412cbaeea8fdaabd"
     },
     {
       "change": "changed",
@@ -225,7 +225,7 @@
     {
       "change": "new",
       "path": "docs/oss/private-scan-coverage-v063.json",
-      "sha256": "21070d73bc1b8e4352be5f2cfd2e894a4adbc3c9c6505f96f31c00f5d81fb814"
+      "sha256": "963a29c00ae9e6baa183039cd0e3c08aa9a34ff0bc25446038058b1fdc23648f"
     },
     {
       "change": "unchanged",
@@ -619,6 +619,11 @@
     },
     {
       "change": "new",
+      "path": "tests/escaped_helper.py",
+      "sha256": "82f249bb156c59f72ac147ac20dd022d4ffa90aae8855e7153d6d6df5e687376"
+    },
+    {
+      "change": "new",
       "path": "tests/fake_codex_app_server.py",
       "sha256": "fe9b666246fbfd3a0d5467fc6adf6e8731abd01b5ff6b75a154231c082faf15b"
     },
@@ -730,7 +735,7 @@
     {
       "change": "new",
       "path": "tests/test_consumer_unconfirmed_stop.py",
-      "sha256": "9bd9e6ee9901facfc41a8016caea13ed2322072839a6832627339fff809344d1"
+      "sha256": "2062cf69b5728dd599822f3840d1459d1ae703662847e39583c1acb11b2ab8be"
     },
     {
       "change": "new",
@@ -751,6 +756,11 @@
       "change": "new",
       "path": "tests/test_discovery_exclusions.py",
       "sha256": "200785e0c8cc6fe73c5ea1e3d8684f0f08c3e8425d1476715f0b9bd4766d2d19"
+    },
+    {
+      "change": "new",
+      "path": "tests/test_escaped_helper.py",
+      "sha256": "8984dfac63a57dc6cb3e5c4596e0d6f9ef9a3c0398632ca01c06992a66d26f43"
     },
     {
       "change": "new",
@@ -835,7 +845,7 @@
     {
       "change": "new",
       "path": "tests/test_mcp_task_continuity.py",
-      "sha256": "bded2ddd1812b171d5f21454ae591d24953141bcf825c2c29cf95bf0119af25c"
+      "sha256": "18f33139af48e73b2ee292c90195605b83d1faa806a1f2c2e2bd42c02990945c"
     },
     {
       "change": "new",
@@ -1020,7 +1030,7 @@
     {
       "change": "new",
       "path": "tests/test_server_exit_before_close.py",
-      "sha256": "ee3277c729264434b301f8d385ad1c5e59db9d2c1e13a4f9e0029fe4f562dacb"
+      "sha256": "05ea2eeeb53bd58435c64efe23f9741ba10e8364652b615341f775f38b1c5afa"
     },
     {
       "change": "new",
@@ -1045,7 +1055,7 @@
     {
       "change": "new",
       "path": "tests/test_task_profile_runtime_seal.py",
-      "sha256": "fc6e0e0fbc5943789c21dc9f5718d55a33bf04e2736eb160ed09b792ab8c3863"
+      "sha256": "08c989e80152665bc6779a0a6908b2e26f00e2363b6aa9021d9919506c0f03de"
     },
     {
       "change": "new",

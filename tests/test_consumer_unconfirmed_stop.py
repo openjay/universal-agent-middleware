@@ -22,14 +22,13 @@ from __future__ import annotations
 import json
 import os
 import shutil
-import signal
 import subprocess
 import sys
 import tempfile
 import time
 import unittest
 from collections.abc import Callable, Iterator, Sequence
-from contextlib import contextmanager
+from contextlib import AbstractContextManager, contextmanager
 from pathlib import Path
 from typing import Any
 
@@ -49,10 +48,10 @@ from universal_agent_middleware.harness_adapter import (
 from universal_agent_middleware.task_control import TaskControlError
 
 from consumer_world import CONSUMER, rule_for
+from escaped_helper import adopting_orphans, drop_helper, end_helper, is_there
 from test_consumer import ConsumerCase
 
 FAKE_SERVER = Path(__file__).resolve().parent / "fake_codex_app_server.py"
-HELPER_COMMAND = "time.sleep(120)"
 ADVISORY_PHASES = ("WAITING_OLD_EXECUTOR", "ATTEMPT_LEFT_OPEN")
 
 
@@ -105,23 +104,11 @@ def helper_of(log: Path, server_pid: int) -> int:
     raise AssertionError("the fake server started no helper")
 
 
-def kill_helper(pid: int) -> None:
-    """SIGKILL a helper this test caused, only while that PID still runs the helper's command (a reused PID is left alone)."""
-    if HELPER_COMMAND in process_table().get(pid, {}).get("command", ""):
-        try:
-            os.kill(pid, signal.SIGKILL)
-        except ProcessLookupError:
-            pass
-
-
 def kill_helpers(log: Path) -> None:
+    """Cleanup: every helper the fake servers of this log started, each ended only while that PID still is the helper (``escaped_helper``)."""
     for entry in fake_entries(log):
         if "orphan_pid" in entry:
-            kill_helper(int(entry["orphan_pid"]))
-
-
-def is_there(pid: int) -> bool:
-    return pid in process_table()
+            drop_helper(int(entry["orphan_pid"]))
 
 
 def start_child_that_execs() -> subprocess.Popen[bytes]:
@@ -142,12 +129,14 @@ class FakeCodex:
 
     root: Path
     addCleanup: Callable[..., None]
+    enterContext: Callable[[AbstractContextManager[Any]], Any]
 
     def codex(self, name: str = "codex", *, io_log: bool = False, **settings: Any) -> tuple[CodexAppServerAdapter, Path]:
         home, codex_home, log = self.root / name / "home", self.root / name / "codex-home", self.root / name / "requests.jsonl"
         home.mkdir(parents=True)
         codex_home.mkdir(parents=True)
         (codex_home / "fake.json").write_text(json.dumps({"log": str(log), **settings}), encoding="utf-8")
+        self.enterContext(adopting_orphans())  # entered first, left last: the cleanup below still finds this process the adopter
         self.addCleanup(kill_helpers, log)
         spec = CodexServerSpec(argv=(sys.executable, str(FAKE_SERVER)), codex_home=str(codex_home), home=str(home))
         return CodexAppServerAdapter(spec, io_log=(self.root / name / "io.jsonl") if io_log else None), log
@@ -400,8 +389,7 @@ class StopEvidenceThroughTheConsumerTest(FakeCodex, ConsumerCase):
                 self.assertEqual(self.advisories(delivery_id), [("WAITING_OLD_EXECUTOR", "EXECUTOR_NOT_CONFIRMED_STOPPED")])
                 self.assertEqual(self.thread_starts(log), 1)
                 self.assertStillOpen(delivery_id)
-                kill_helper(helper)
-                wait_until(lambda: not is_there(helper))
+                end_helper(helper)
                 self.life(rules, registered)  # a complete read-back now shows every recorded identity gone
                 self.assertSettledAsStopped(delivery_id)
                 self.assertEqual(self.phases(delivery_id).count("STOP_RECONCILED"), 1)
@@ -418,8 +406,7 @@ class StopEvidenceThroughTheConsumerTest(FakeCodex, ConsumerCase):
         helper = helper_of(log, ended["binding"]["observed"]["spawn_pid"])
         self.assertTrue(is_there(helper), "the escaped child is alive: the table that could not be read would have hidden it")
         self.assertEqual(self.advisories(delivery_id), [("ATTEMPT_LEFT_OPEN", "EXECUTOR_STOP_OBSERVATION_FAILED")])
-        kill_helper(helper)
-        wait_until(lambda: not is_there(helper))
+        end_helper(helper)
         self.life(rules, adapter)  # a later life, ps healthy, the child gone: no PID was ever recorded, so nothing is proven
         self.assertStillOpen(delivery_id)
         self.assertEqual(self.advisories(delivery_id), [("ATTEMPT_LEFT_OPEN", "EXECUTOR_STOP_OBSERVATION_FAILED")])
@@ -444,8 +431,7 @@ class StopEvidenceThroughTheConsumerTest(FakeCodex, ConsumerCase):
         self.life(rules, adapter)  # the next life finds a gone root group and no end record
         self.assertStillOpen(delivery_id)
         self.assertEqual(self.advisories(delivery_id), [("ATTEMPT_LEFT_OPEN", "EXECUTOR_END_NOT_RECORDED")])
-        kill_helper(helper)
-        wait_until(lambda: not is_there(helper))
+        end_helper(helper)
         self.life(rules, adapter)  # no child PID is guessed, so even a gone child proves nothing
         self.assertStillOpen(delivery_id)
         self.assertEqual(self.advisories(delivery_id), [("ATTEMPT_LEFT_OPEN", "EXECUTOR_END_NOT_RECORDED")])
@@ -498,8 +484,7 @@ class StopEvidenceThroughTheConsumerTest(FakeCodex, ConsumerCase):
         self.life(rules, adapter)
         ended = self.ended(delivery_id)
         helper = helper_of(log, ended["binding"]["observed"]["spawn_pid"])
-        kill_helper(helper)
-        wait_until(lambda: not is_there(helper))  # in truth every recorded process is gone now
+        end_helper(helper)  # in truth every recorded process is gone now
         with broken_ps("exit1"):  # but this Consumer cannot read the table: absence is not shown
             self.life(rules, adapter)
         self.assertStillOpen(delivery_id)
