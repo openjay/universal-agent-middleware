@@ -4,6 +4,7 @@
 
 | Version | Supported |
 |---------|-----------|
+| 0.6.x   | Yes (Public Preview) |
 | 0.5.x   | Yes (Public Preview) |
 | < 0.5   | No |
 

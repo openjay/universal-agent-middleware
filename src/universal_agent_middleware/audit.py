@@ -36,6 +36,13 @@ class HashChainedAuditLog:
         self._writer_pid = os.getpid()
         self._writer_instance = str(uuid.uuid4())
 
+    @property
+    def writer_instance_id(self) -> str:
+        """Identity of this process as the writer, stamped on every record it appends."""
+        if self._writer_pid != os.getpid():
+            self._writer_pid, self._writer_instance = os.getpid(), str(uuid.uuid4())
+        return self._writer_instance
+
     @staticmethod
     def _canonical(obj: dict[str, Any]) -> bytes:
         return json.dumps(obj, sort_keys=True, separators=(",", ":"),
@@ -128,7 +135,9 @@ class HashChainedAuditLog:
             fd = os.open(self.path, os.O_RDWR | os.O_CREAT | os.O_APPEND | os.O_NOFOLLOW, 0o600)
             with os.fdopen(fd, "r+b", buffering=0) as fh:
                 fcntl.flock(fh, fcntl.LOCK_EX)
-                if self.freeze_file and self.freeze_file.exists():
+                # An entry NAMED like the latch is the latch, whatever it points at or holds (the release pipeline reads it with os.path.lexists):
+                # Path.exists follows a symlink, so a dangling or looping one would read as no latch and the write would go on.
+                if self.freeze_file and os.path.lexists(self.freeze_file):
                     raise AuditIntegrityError("FROZEN: operator resolution required")
                 stat = os.fstat(fd)
                 identity = (stat.st_dev, stat.st_ino)

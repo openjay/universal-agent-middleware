@@ -1,10 +1,10 @@
 # MCP Adapter
 
-UAM v0.5.1rc1 (Public Preview RC1) targets MCP revision `2026-07-28` for modern integrations.
+UAM v0.6.3 (Public Preview) targets MCP revision `2026-07-28` for modern integrations.
 
-The session-read profile exposes **19 read-only MCP tools** derived from `tool_contract.json`. See `docs/oss/public-profile-contract.md` for the canonical inventory.
+The session-read profile of this source tree is `READ_ONLY_SESSION_PROFILE_V3`: **20 read-only MCP tools** derived from `tool_contract.json` — the 19 tools of `READ_ONLY_SESSION_PROFILE_V2` plus `uam_file_digest`, which only this SDK adapter serves (the legacy HTTP/OpenAPI and custom stdio adapters do not). `docs/oss/profile-v3-declaration.json` binds the complete tool set, the input/output/safety/description fingerprints and the metadata difference against V2 (seven tool descriptions changed, so connectors must Refresh); `docs/oss/public-profile-contract-v3.md` is the successor contract. V3 is **adopted locally** (the maintainer's own supervised runtime) and **published in 0.6.3**. The 19-tool inventory of the published v0.5.1rc1 stays the historical baseline in `docs/oss/public-profile-contract.md`.
 
-**Distribution:** Install from PyPI (`pip install universal-agent-middleware==0.5.1rc1`) or download wheel/sdist from [GitHub Release v0.5.1rc1](https://github.com/openjay/universal-agent-middleware/releases/tag/v0.5.1rc1). Public CI qualification: 8/8 PASS (run `33954828455`).
+**Distribution:** Install from PyPI (`pip install "universal-agent-middleware[mcp]==0.6.3"`) or download the wheel and sdist from [GitHub Release v0.6.3](https://github.com/openjay/universal-agent-middleware/releases/tag/v0.6.3); `SHA256SUMS` lists their digests and PyPI serves the same bytes. The CI evidence for a release is the GitHub Actions run of its tagged commit.
 
 HTTP endpoint: `POST /mcp`
 Stdio entry: `uam mcp-sdk-stdio --profile session-read --registry ... --state-dir ...`

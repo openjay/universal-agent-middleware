@@ -1,12 +1,12 @@
 # Roadmap
 
-**Current release:** v0.5.1rc1 Public Preview RC1  
-**Contract:** SDK stdio session-read profile, 19 read-only MCP tools
+**Current release:** v0.6.3 Public Preview  
+**Contract:** SDK stdio session-read profile, 20 read-only MCP tools (`READ_ONLY_SESSION_PROFILE_V3`); the v0.5.1rc1 contract served 19
 
 ## Public Preview (now)
 
 - [x] Scope search authorization enforcement (OSS-SEC-001)
-- [x] Synthetic portable test suite (199 tests, 1 skipped)
+- [x] Synthetic portable test suite (`pytest` from a checkout)
 - [x] Audit v2 hash chain with verification
 - [x] Python 3.11–3.14 × Linux/macOS CI matrix
 - [x] Wheel/sdist packaging with clean install smoke

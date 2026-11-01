@@ -6,7 +6,6 @@ import multiprocessing
 import os
 import signal
 import subprocess
-import sys
 from pathlib import Path
 from unittest.mock import patch
 
@@ -17,6 +16,7 @@ from universal_agent_middleware import runtime as rt
 from universal_agent_middleware import supervisor as sup
 from universal_agent_middleware import installer as inst
 from universal_agent_middleware.doctor import _check_audit, run_doctor
+from universal_agent_middleware.release_config import compute_bundle
 from universal_agent_middleware.service import mcp_command, validate_tunnel_config
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -389,6 +389,7 @@ def test_activation_launch_failure_latches_and_never_writes_success(runtime_fixt
     r, manifest, home = runtime_fixture
     import shutil
     plan = manifest.parent
+    rt.atomic_json(manifest, {**r, "config_bundle": compute_bundle(r)})  # what stage records for a plan
     shutil.copy2(r["tunnel_config"], plan / "tunnel-config.yaml")
     inst.render_plists(ROOT / "tools/system-service/plists", plan / "plists", home,
                       Path(r["uam_home"]), Path(r["log_root"]), Path(r["uam_home"]) / "runtime/uam-runtime.json")
@@ -499,3 +500,180 @@ def test_credential_setup_uses_manifest_and_never_rotates(runtime_fixture):
         setup_credential(str(manifest))
     assert key.read_bytes() == b"fixture-new-key"
     assert key.stat().st_mode & 0o777 == 0o600
+
+
+def test_doctor_timeout_includes_timeout_seconds(runtime_fixture):
+    """F3 closure: timeout receipt must include timeout_seconds."""
+    r, manifest, _ = runtime_fixture
+    with patch.object(sup, "validate_release", return_value={}), \
+         patch.object(sup.subprocess, "run") as run_mock:
+        run_mock.side_effect = subprocess.TimeoutExpired(cmd="doctor", timeout=30)
+        result = sup.run_cycle(str(manifest))
+    assert result["overall"] != "READY"
+    receipts = list((Path(r["log_root"])/"incidents").glob("*.json"))
+    assert len(receipts) >= 1
+    receipt = json.loads(receipts[-1].read_text())
+    assert receipt["failure_class"] == "doctor_timeout"
+    assert receipt["evidence"].get("timeout_seconds") == 30
+
+
+def test_index_scope_denies_without_index_authority():
+    """F2 closure: index_scope must deny scopes where authority.index is false."""
+    import tempfile
+    from universal_agent_middleware.root_scope import RootScopeAuthority, RootScope, RootScopeRegistry
+    from universal_agent_middleware.discovery import DiscoveryEngine
+
+    with tempfile.TemporaryDirectory() as td:
+        root = Path(td) / "code"
+        root.mkdir()
+        scope = RootScope(
+            scope_id="no-index",
+            root=str(root),
+            authority=RootScopeAuthority(discover=True, index=False),
+        )
+        registry = RootScopeRegistry()
+        registry._scopes = [scope]
+        registry._recompute_policy_generation()
+        engine = DiscoveryEngine(registry)
+        result = engine.index_scope("no-index")
+        assert "error" in result
+        assert "index authority" in result["error"]
+
+
+@pytest.mark.parametrize("failure_class", [
+    "reality_index_stale",
+    "reality_index_missing",
+    "reality_index_policy_mismatch",
+    "reality_index_locked",
+    "reality_index_integrity_failure",
+    "reality_index_schema_incompatible",
+])
+def test_run_cycle_classifies_every_index_failure_as_log_only(runtime_fixture, failure_class):
+    """An index problem is logged against the index; it never restarts the tunnel."""
+    r, manifest, _ = runtime_fixture
+    idx_status = "DEGRADED" if failure_class != "reality_index_integrity_failure" else "FAIL"
+    checks = healthy_checks()
+    checks["reality_index"] = {
+        "status": idx_status,
+        "failure_class": failure_class,
+        "scopes": [
+            {"scope_id": "test-scope", "stale": True, "obligation": "required",
+             "policy_match": failure_class != "reality_index_policy_mismatch",
+             "status": "missing" if failure_class == "reality_index_missing" else "ok"},
+        ],
+    }
+    report = {"overall": "DEGRADED", "checks": checks}
+    with patch.object(sup, "validate_release", return_value={}), \
+         patch.object(sup, "doctor_process", return_value=report), \
+         patch.object(sup.subprocess, "run") as external:
+        sup.run_cycle(str(manifest))
+    external.assert_not_called()
+    receipts = list((Path(r["log_root"]) / "incidents").glob("*.json"))
+    assert len(receipts) >= 1
+    last = json.loads(receipts[-1].read_text())
+    assert last["failure_class"] == failure_class
+    assert last["action"] == "log_only"
+    assert last["affected_component"] == "reality_index"
+
+
+def test_scope_inventory_does_not_persist_when_index_false():
+    """C2 closure: scope_inventory must not create persistent index when index=false."""
+    import tempfile
+    from universal_agent_middleware.root_scope import RootScopeAuthority, RootScope, RootScopeRegistry
+    from universal_agent_middleware.discovery import DiscoveryEngine
+    from universal_agent_middleware.reality_index import RealityIndex
+
+    with tempfile.TemporaryDirectory() as td:
+        root = Path(td) / "code"
+        root.mkdir()
+        (root / "repo-a").mkdir()
+        (root / "repo-a" / ".git").mkdir()
+        state = Path(td) / "state"
+
+        scope = RootScope(
+            scope_id="discover-only",
+            root=str(root),
+            authority=RootScopeAuthority(discover=True, index=False),
+        )
+        registry = RootScopeRegistry()
+        registry._scopes = [scope]
+        registry._recompute_policy_generation()
+
+        idx = RealityIndex(state)
+        engine = DiscoveryEngine(registry, reality_index=idx)
+        result = engine.scope_inventory("discover-only")
+        assert "error" not in result
+        snapshot = idx.get_active_snapshot(
+            "discover-only", registry.policy_generation, max_age_sec=3600,
+        )
+        assert snapshot is None, "index=false scope must not produce persistent snapshot"
+        assert result["freshness"]["source"] == "live_scan", "nothing was persisted, so nothing was indexed"
+        assert engine.scope_inventory("discover-only")["freshness"]["source"] == "scope_inventory_cache"
+
+
+def _inventory_source(*, index_authority: bool, with_index: bool) -> tuple[str, str]:
+    import tempfile
+    from universal_agent_middleware.root_scope import RootScopeAuthority, RootScope, RootScopeRegistry
+    from universal_agent_middleware.discovery import DiscoveryEngine
+    from universal_agent_middleware.reality_index import RealityIndex
+
+    with tempfile.TemporaryDirectory() as td:
+        root = Path(td) / "code"
+        (root / "repo-a" / ".git").mkdir(parents=True)
+        registry = RootScopeRegistry()
+        registry._scopes = [RootScope(
+            scope_id="probe", root=str(root),
+            authority=RootScopeAuthority(discover=True, index=index_authority))]
+        registry._recompute_policy_generation()
+        engine = DiscoveryEngine(registry, reality_index=RealityIndex(Path(td) / "state") if with_index else None)
+        first = engine.scope_inventory("probe")["freshness"]["source"]
+        return first, engine.scope_inventory("probe")["freshness"]["source"]
+
+
+def test_scope_inventory_names_the_source_by_what_actually_happened():
+    assert _inventory_source(index_authority=True, with_index=True) == ("live_scan_indexed", "reality_index")
+    assert _inventory_source(index_authority=False, with_index=True) == ("live_scan", "scope_inventory_cache")
+    assert _inventory_source(index_authority=True, with_index=False) == ("live_scan", "scope_inventory_cache")
+
+
+def test_cli_index_foreground_single_flight():
+    """C3 closure: concurrent CLI index for same scope is blocked by flock."""
+    import fcntl
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as td:
+        state = Path(td) / "state"
+        state.mkdir()
+        lock_path = state / "refresh-test-scope.lock"
+        lock_path.touch()
+        fd = lock_path.open("a+b")
+        fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        try:
+            fd2 = lock_path.open("a+b")
+            try:
+                fcntl.flock(fd2, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                assert False, "second lock should have been blocked"
+            except BlockingIOError:
+                pass
+            finally:
+                fd2.close()
+        finally:
+            fcntl.flock(fd, fcntl.LOCK_UN)
+            fd.close()
+
+
+def test_init_locked_reports_locked_not_corrupt():
+    """C4 closure: init-time lock contention must report LOCKED, not CORRUPT."""
+    import tempfile
+    from universal_agent_middleware.reality_index import RealityIndex
+
+    with tempfile.TemporaryDirectory() as td:
+        state = Path(td) / "state"
+        idx = RealityIndex(state)
+        idx._init_locked = True
+        integrity = idx.check_integrity()
+        assert integrity["status"] == "LOCKED"
+        assert integrity["valid"] is True
+        report = idx.health_report(None)
+        assert report["status"] == "DEGRADED"
+        assert report["failure_class"] == "reality_index_locked"

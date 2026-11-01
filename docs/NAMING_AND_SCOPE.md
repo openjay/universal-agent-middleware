@@ -20,7 +20,7 @@ Any name containing Codex, GPT, OpenAI, Claude, Cursor, or another vendor would 
 
 ## Meaning of “Universal”
 
-Universal means **architecturally neutral and extensible**, not “supports every effect today.” v0.2 truthfully supports one workspace kind and one execution profile. New kinds/profiles require explicit conformance and safety work.
+Universal means **architecturally neutral and extensible**, not “supports every effect today.” It truthfully supports two read-only workspace kinds (`git-repository`, and `filesystem-directory` after v0.6.0) and one execution profile. New kinds/profiles require explicit conformance and safety work.
 
 
 ## External naming discipline

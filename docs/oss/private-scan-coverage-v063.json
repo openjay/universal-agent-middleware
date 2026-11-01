@@ -1,0 +1,70 @@
+{
+  "baseline_public_commit": "5a32070e89350e26a5b0caca017b97b5f9dd54d5",
+  "excluded_generated": [
+    "docs/oss/release-0.6.3-product-files.json",
+    "docs/oss/private-scan-coverage-v063.json",
+    "docs/oss/approved-export-allowlist-v063.json"
+  ],
+  "method": "text patterns over file contents and file names; each hit is classed allowed_synthetic, pre_existing (the identical line is in the public base) or unexpected",
+  "not_ci_evidence": "A local scan is not an assurance that the repository holds nothing private, and it is not CI: the CI evidence for this release is the GitHub Actions run of the tagged commit.",
+  "not_scanned": [
+    "meaning: only the patterns above are searched; personal data or credentials in another shape are not detected",
+    "git history: not scanned for content; commit author/committer identity is checked in the release evidence, not by this scan",
+    "binary members: a member that is not valid UTF-8 is listed, not interpreted",
+    "third-party dependencies and their licences",
+    "runtime behaviour: nothing here shows what the code writes or logs when it runs"
+  ],
+  "pattern_categories": {
+    "email": "any address; example.invalid, example.com, github.com, gitlab.com, gitlab.example.com and the GitHub noreply domain are allowed",
+    "network": "private IPv4 ranges, .local host names, tunnel provider names",
+    "private_identifier": "the maintainer's handle outside the public owner name, names of private projects used as fixtures, provenance and host names",
+    "secret_shape": "private-key headers and GitHub, OpenAI-style, AWS, Slack, PyPI tokens, bearer literals; reported by name, path and line, never by value",
+    "structural": "symbolic links, files larger than 1 MB, files that are not UTF-8, compiled/key/credential/database file names",
+    "user_path": "/Users/<name> and /home/<name> and C:\\Users\\<name> paths; placeholders (example, you, someone, private, x, y, runner) are allowed"
+  },
+  "pre_existing_in_public_main": [
+    {
+      "category": "private_identifier",
+      "note": "the identical line is already in the public base; unchanged here",
+      "path": "GOVERNANCE.md"
+    },
+    {
+      "category": "private_identifier",
+      "note": "the identical line is already in the public base; unchanged here",
+      "path": "docs/oss/launch-packet.md"
+    },
+    {
+      "category": "private_identifier",
+      "note": "the identical line is already in the public base; unchanged here",
+      "path": "docs/oss/license-decision.md"
+    }
+  ],
+  "predecessor": "docs/oss/private-scan-coverage.json (v0.5.1rc1; historical, unchanged)",
+  "release": "0.6.3",
+  "results": {
+    "fictional_fixtures": "tests/test_s1_derived_surfaces.py and tests/test_s1_tool_surface_matrix.py hold deliberately fictional tokens (ghp_S1…Fictional…0042); they are not credentials",
+    "hits_by_category": {
+      "email": {
+        "allowed_synthetic": 32
+      },
+      "network": {
+        "allowed_synthetic": 9
+      },
+      "private_identifier": {
+        "pre_existing": 3
+      },
+      "secret_shape": {
+        "allowed_synthetic": 3
+      },
+      "user_path": {
+        "allowed_synthetic": 28
+      }
+    },
+    "structural_findings": 0,
+    "unexpected_hits": 0
+  },
+  "schema": "UAM_PRIVATE_SCAN_COVERAGE_V2",
+  "scope": "228 tracked files: the 0.6.3 tree before the three generated documents in `excluded_generated` were added (they hold hashes, paths and prose about this scan); the final tree and the release artifacts are scanned again at release time",
+  "tracked_file_count_final": 231,
+  "tracked_file_count_scanned": 228
+}

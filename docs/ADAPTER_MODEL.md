@@ -45,6 +45,8 @@ v0.2 implements `git-repository` with capabilities:
 - `filesystem.read`
 - `git.observe`
 
+After v0.6.0, `filesystem-directory` is implemented with the single capability `filesystem.read`. A directory is not a repository, so it can never carry `git.observe`: Git tools and `repository-change-v1` contracts refuse it, and every northbound adapter (SDK MCP, stdio MCP, HTTP) returns the same machine-readable `diagnostic` (`workspace-diagnostic-v1`) next to the human-readable error — `status: UNSUPPORTED_CAPABILITY` for a capability the kind cannot grant, `status: UNSUPPORTED_WORKSPACE_KIND` / `reason: NON_GIT_DIRECTORY` for an authorized directory that was not admitted. Errors without a diagnostic keep their exact previous shape.
+
 Additional workspace kinds require explicit implementation and tests. A directory is not automatically treated as a database, cloud account, brokerage account, or runtime environment.
 
 ## Adapter conformance law

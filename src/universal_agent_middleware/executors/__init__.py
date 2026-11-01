@@ -17,7 +17,7 @@ so the adapter itself contains no business logic.
 from __future__ import annotations
 
 import subprocess
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable
 
@@ -35,19 +35,6 @@ class ExecutionOutcome:
     unresolved_risks: list[str]
     executor: str
     error: str = ""
-
-    def to_result_payload(self) -> dict[str, Any]:
-        return {
-            "result_id": self.result_id,
-            "contract_id": self.contract_id,
-            "workspace_id": self.workspace_id,
-            "base_revision": self.base_revision,
-            "final_revision": self.final_revision,
-            "changed_paths": self.changed_paths,
-            "verification": self.verification,
-            "unresolved_risks": self.unresolved_risks,
-            "executor": self.executor,
-        }
 
 
 @dataclass

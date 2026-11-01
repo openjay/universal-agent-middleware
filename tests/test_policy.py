@@ -1,10 +1,11 @@
-import os
 import tempfile
 import unittest
 from pathlib import Path
 
 from universal_agent_middleware.errors import PathPolicyError
-from universal_agent_middleware.policy import resolve_safe_path
+from universal_agent_middleware.policy import (
+    _is_denied_component, ensure_relative_path, resolve_safe_path, should_hide_path,
+)
 
 
 class PolicyTests(unittest.TestCase):
@@ -32,6 +33,29 @@ class PolicyTests(unittest.TestCase):
                 self.skipTest("symlinks unavailable")
             with self.assertRaises(PathPolicyError):
                 resolve_safe_path(td, "escape")
+
+    def test_protected_names_do_not_depend_on_letter_case(self):
+        # The default macOS filesystem is case-insensitive: `.SSH` is the `.ssh` directory.
+        for name in (".ssh", ".SSH", ".Ssh", ".AWS", ".GIT", "ID_RSA", "Credentials", ".ENV", "Server.PEM"):
+            with self.subTest(name=name):
+                self.assertTrue(_is_denied_component(name))
+                with self.assertRaises(PathPolicyError):
+                    ensure_relative_path(f"project/{name}/inner.txt")
+
+    def test_ordinary_names_stay_readable(self):
+        for name in ("README.md", "docs", "credential-model.md", "environment.md", "keys.md", "sshd_notes.txt"):
+            with self.subTest(name=name):
+                self.assertFalse(_is_denied_component(name))
+
+    def test_differently_cased_alias_of_a_protected_directory_is_rejected_on_disk(self):
+        with tempfile.TemporaryDirectory() as td:
+            Path(td, ".ssh").mkdir()
+            Path(td, ".ssh", "config").write_text("Host example\n")
+            if not Path(td, ".SSH", "config").exists():
+                self.skipTest("case-sensitive filesystem: `.SSH` is not an alias of `.ssh`")
+            with self.assertRaises(PathPolicyError):
+                resolve_safe_path(td, ".SSH/config")
+            self.assertTrue(should_hide_path(td, Path(td, ".SSH")))
 
 
 if __name__ == "__main__":
