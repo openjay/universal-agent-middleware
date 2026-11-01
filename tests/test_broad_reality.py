@@ -17,15 +17,20 @@ import unittest.mock
 from pathlib import Path
 
 from universal_agent_middleware.root_scope import RootScope, RootScopeAuthority, RootScopeRegistry
-from universal_agent_middleware.discovery import (
-    DiscoveryEngine,
-    _build_search_exclusion_globs,
-    _collect_search_paths,
-    _is_sensitive_path,
-)
+from universal_agent_middleware.discovery import DiscoveryEngine
 from universal_agent_middleware.exploration import ExplorationEngine
 from universal_agent_middleware.gateway import MiddlewareGateway
+from universal_agent_middleware.path_authority import PathPolicy
+from universal_agent_middleware.scope_search import is_sensitive_path
 
+from scope_search_instruments import (
+    DESCRIPTOR_OPERAND,
+    OpenSpy,
+    RunRecorder,
+    ScriptedRipgrep,
+    completed,
+    identity_of,
+)
 from synthetic_fixtures import build_multi_project_scope, init_git_repo, write_workspace_registry
 
 
@@ -193,16 +198,16 @@ class TestSecretFirewall(unittest.TestCase):
     """Secret firewall remains effective under broad scope."""
 
     def test_env_file_is_sensitive(self):
-        self.assertTrue(_is_sensitive_path("/tmp/project/.env"))
-        self.assertTrue(_is_sensitive_path(".env.local"))
+        self.assertTrue(is_sensitive_path("/tmp/project/.env"))
+        self.assertTrue(is_sensitive_path(".env.local"))
 
     def test_ssh_key_is_sensitive(self):
-        self.assertTrue(_is_sensitive_path("id_rsa"))
-        self.assertTrue(_is_sensitive_path("id_ed25519"))
+        self.assertTrue(is_sensitive_path("id_rsa"))
+        self.assertTrue(is_sensitive_path("id_ed25519"))
 
     def test_normal_file_is_not_sensitive(self):
-        self.assertFalse(_is_sensitive_path("README.md"))
-        self.assertFalse(_is_sensitive_path("src/main.py"))
+        self.assertFalse(is_sensitive_path("README.md"))
+        self.assertFalse(is_sensitive_path("src/main.py"))
 
 
 class TestMCPToolsExposed(unittest.TestCase):
@@ -440,7 +445,7 @@ class TestNestedScopeSearchDenial(unittest.TestCase):
         self.assertEqual(result.get("results", []), [])
         tmp.cleanup()
 
-    def test_exclusion_globs_include_denied_relative_path(self):
+    def test_policy_denies_scope_search_inside_the_denied_zone_only(self):
         tmp = tempfile.TemporaryDirectory()
         tmp_root = Path(tmp.name)
         inner = tmp_root / "narrow-zone"
@@ -454,12 +459,15 @@ class TestNestedScopeSearchDenial(unittest.TestCase):
         ))
         sr.add_scope(RootScope(scope_id="inner-denied", root=str(inner), authority=RootScopeAuthority()))
 
-        globs = _build_search_exclusion_globs(tmp_root, sr)
-        self.assertIn("!narrow-zone/**", globs)
+        policy = PathPolicy.beneath(sr, tmp_root)
+        self.assertTrue(policy.denies("scope_search"))
+        self.assertFalse(policy.allows("scope_search", inner.resolve() / "notes.txt"))
+        self.assertFalse(policy.allows("scope_search", inner.resolve()))
+        self.assertTrue(policy.allows("scope_search", tmp_root.resolve() / "public" / "notes.txt"))
         tmp.cleanup()
 
     def test_denied_unreadable_files_never_scanned_by_subprocess(self):
-        """Pre-read boundary: rg must receive -g exclusions; unreadable denied dirs stay untouched."""
+        """Pre-read boundary: a denied directory, even an unreadable one, is never listed, opened or handed over."""
         tmp = tempfile.TemporaryDirectory()
         tmp_root = Path(tmp.name)
         allowed = tmp_root / "public"
@@ -468,6 +476,7 @@ class TestNestedScopeSearchDenial(unittest.TestCase):
         denied.mkdir()
         (allowed / "visible.txt").write_text("UAM_VISIBLE_MARKER\n")
         (denied / "secret.txt").write_text("UAM_DENIED_MARKER\n")
+        denied_identity = identity_of(denied)
         os.chmod(denied, 0o000)
 
         sr = RootScopeRegistry()
@@ -478,25 +487,20 @@ class TestNestedScopeSearchDenial(unittest.TestCase):
         ))
         sr.add_scope(RootScope(scope_id="inner-denied", root=str(denied), authority=RootScopeAuthority()))
 
-        captured_cmds: list[list[str]] = []
-        original_run = subprocess.run
-
-        def spy_run(cmd, *args, **kwargs):
-            captured_cmds.append(list(cmd))
-            return original_run(cmd, *args, **kwargs)
-
+        recorder = RunRecorder()
+        spy = OpenSpy()
         engine = DiscoveryEngine(sr)
         try:
-            with unittest.mock.patch("universal_agent_middleware.discovery.subprocess.run", spy_run):
+            with recorder.patch(), spy.patch():
                 result = engine.search_scope("outer", "UAM_DENIED_MARKER")
             self.assertEqual(result.get("total_matches", 0), 0)
-            self.assertGreater(len(captured_cmds), 0)
-            rg_cmd = captured_cmds[0]
-            self.assertIn("-g", rg_cmd)
-            glob_args = [rg_cmd[i + 1] for i, token in enumerate(rg_cmd) if token == "-g"]
-            self.assertIn("!narrow-zone/**", glob_args)
+            self.assertGreater(len(recorder.ripgrep_calls), 0)
+            self.assertNotIn(denied_identity, spy.listed)
+            self.assertNotIn(denied_identity, spy.opened)
+            for operand in recorder.operands:
+                self.assertIsNotNone(DESCRIPTOR_OPERAND.fullmatch(operand), operand)
 
-            with unittest.mock.patch("universal_agent_middleware.discovery.subprocess.run", spy_run):
+            with recorder.patch():
                 visible = engine.search_scope("outer", "UAM_VISIBLE_MARKER")
             self.assertGreater(visible.get("total_matches", 0), 0)
         finally:
@@ -530,10 +534,9 @@ class TestNestedScopeSearchDenial(unittest.TestCase):
             authority=RootScopeAuthority(text_search=True),
         ))
 
-        globs = _build_search_exclusion_globs(tmp_root, sr)
-        self.assertIn("!restricted/**", globs)
-        search_paths = _collect_search_paths(tmp_root, sr)
-        self.assertTrue(any("allowed-pocket" in str(p) for p in search_paths))
+        policy = PathPolicy.beneath(sr, tmp_root)
+        self.assertFalse(policy.allows("scope_search", denied_parent.resolve() / "blocked.txt"))
+        self.assertEqual(policy.pockets("scope_search", tmp_root), [("restricted", "allowed-pocket")])
 
         engine = DiscoveryEngine(sr)
         result = engine.search_scope("outer", "UAM_ALLOWED_POCKET_MARKER")
@@ -714,11 +717,18 @@ class TestSearchScopeSecurity(unittest.TestCase):
         self.assertIn("results", result)
 
     def test_rg_uses_no_config_flag(self):
-        import inspect
-        source = inspect.getsource(DiscoveryEngine.search_scope)
-        self.assertIn("--no-config", source)
-        self.assertIn("--fixed-strings", source)
-        self.assertIn('"--"', source)
+        """A hostile query is an operand after ``--``; ripgrep reads no config and takes the query literally."""
+        ripgrep = ScriptedRipgrep(lambda call: completed(b"", 1))
+        with unittest.mock.patch("universal_agent_middleware.discovery.find_ripgrep", return_value="/usr/bin/rg"), \
+                ripgrep.patch():
+            self.engine.search_scope(self.scope_id, "--pre=cat")
+        self.assertTrue(ripgrep.ripgrep_calls)
+        for call in ripgrep.ripgrep_calls:
+            flags = call.argv[: call.argv.index("--")]
+            self.assertIn("--no-config", flags)
+            self.assertIn("--fixed-strings", flags)
+            self.assertNotIn("--pre=cat", flags)
+            self.assertEqual(call.query, "--pre=cat")
 
 
 class TestSearchScopeAttribution(unittest.TestCase):

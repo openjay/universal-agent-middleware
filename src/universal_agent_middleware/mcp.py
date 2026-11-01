@@ -5,7 +5,7 @@ import sys
 from typing import Any, Callable
 
 from . import __version__
-from .errors import ProtocolError, UAMError
+from .errors import ProtocolError, UAMError, error_body
 from .gateway import MiddlewareGateway
 from .openapi import contract_input_schema, result_input_schema
 
@@ -254,7 +254,7 @@ class MCPDispatcher:
                         },
                     )
                 except (UAMError, ValueError, KeyError) as exc:
-                    payload = {"error": type(exc).__name__, "message": str(exc)}
+                    payload = error_body(exc)
                     return self._response(
                         request_id,
                         {

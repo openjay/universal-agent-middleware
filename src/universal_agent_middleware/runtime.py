@@ -11,6 +11,8 @@ from pathlib import Path
 from typing import Any
 
 SCHEMA = "uam-runtime-v1"
+# Under recovery_root. Whoever holds it is the only party allowed to make recovery or install decisions.
+SUPERVISOR_LOCK_NAME = "supervisor.lock"
 PATH_KEYS = {"uam_home", "release_root", "current_release", "config_root", "state_root",
              "audit_file", "recovery_root", "credential_root", "log_root", "registry_file",
              "root_scopes_file", "tunnel_client", "tunnel_config", "policy_file"}
@@ -74,16 +76,92 @@ def load_runtime(path: str | Path) -> dict[str, Any]:
     return data
 
 
+def control_plane_paths(runtime: dict[str, Any]) -> list[Path]:
+    """UAM's own home, releases, config, state, credentials, logs and recovery paths.
+
+    No directory workspace may equal, contain or sit inside any of them: a directory that
+    overlaps UAM's control plane would let a reading client see UAM's own ledger and secrets.
+    """
+    return [Path(runtime[key]) for key in sorted(PATH_KEYS)]
+
+
 def validate_paths(runtime: dict[str, Any], registry: str, state: str) -> None:
     for actual, key in [(registry, "registry_file"), (state, "state_root")]:
         if Path(actual).resolve() != Path(runtime[key]).resolve():
             raise ValueError(f"effective path differs from runtime manifest: {key}")
 
 
-def validate_configs(runtime: dict[str, Any]) -> None:
+class AdmissionError(ValueError):
+    """A launch the sealed runtime does not admit. ``code`` is all a caller reports: no path and no value."""
+
+    def __init__(self, code: str):
+        super().__init__(code)
+        self.code = code
+
+
+def release_id(runtime: dict[str, Any]) -> str:
+    """The name of the release directory the runtime selects; audit records written under it are stamped with it."""
+    return Path(runtime["current_release"]).name
+
+
+def validate_dedicated_state(runtime: dict[str, Any], registry: str, state: str) -> None:
+    """The path rule of a profile that reads the runtime's registry and keeps a state directory of its own.
+
+    ``validate_paths`` is the rule for the process that serves THE state of the runtime. This is its counterpart: the registry
+    must still be the manifest's, so the profile sees exactly the workspaces the runtime admits, but the state directory must
+    neither equal, contain nor sit inside any control-plane path. It can then never be the read-only service's audit chain, a
+    recovery latch, a credential or log directory, the config or a release.
+    """
+    if Path(registry).resolve() != Path(runtime["registry_file"]).resolve():
+        raise AdmissionError("REGISTRY_NOT_RUNTIMES")
+    target = Path(state).expanduser().resolve(strict=False)
+    for path in control_plane_paths(runtime):
+        other = path.resolve(strict=False)
+        if target == other or target.is_relative_to(other) or other.is_relative_to(target):
+            raise AdmissionError("STATE_NOT_DEDICATED")
+
+
+def admit_dedicated_runtime(manifest: str | Path, registry: str, state: str) -> dict[str, Any]:
+    """The runtime a dedicated-state launch runs under, or ``AdmissionError`` carrying exactly one code.
+
+    The release checks are those ``uam mcp-sdk-stdio`` makes before it serves: the manifest loads, and the package that is
+    executing is the whole, current release the manifest names (``validate_release``). The state rule is turned around
+    (``validate_dedicated_state``), so the launch never shares the read-only service's state. A FROZEN latch of the runtime stops
+    the launch here; once the gateway is built with the returned runtime it stops every later audit write as well. The latch is
+    any entry named ``FROZEN.json`` in the recovery root (``os.path.lexists``, the reading of ``release._freeze_evidence`` and of the
+    audit writer): a symlink that points nowhere, at itself or into a directory that cannot be searched is a latch, not its absence.
+    """
+    try:
+        runtime = load_runtime(manifest)
+    except (OSError, ValueError, KeyError, TypeError):
+        raise AdmissionError("RUNTIME_UNREADABLE") from None
+    try:
+        validate_release(runtime)
+    except (OSError, ValueError, KeyError, TypeError):
+        raise AdmissionError("RELEASE_NOT_SEALED") from None
+    validate_dedicated_state(runtime, registry, state)
+    if os.path.lexists(Path(runtime["recovery_root"]) / "FROZEN.json"):
+        raise AdmissionError("RUNTIME_FROZEN")
+    return runtime
+
+
+def validate_configs(runtime: dict[str, Any], *, require_complete_registry: bool = False) -> None:
+    """Validate runtime configuration.
+
+    A registered workspace whose root is gone does not fail runtime start or Doctor: it is
+    served as unavailable and reported as a coverage gap. Release staging and activation pass
+    ``require_complete_registry=True`` so the gap is caught before ``current`` is switched
+    instead of after activation, when only a FROZEN latch can follow.
+    """
     from .workspace import WorkspaceRegistry
     from .root_scope import RootScopeAuthority
-    WorkspaceRegistry(runtime["registry_file"])
+    registry = WorkspaceRegistry(runtime["registry_file"])
+    if require_complete_registry:
+        gaps = registry.coverage()["unavailable"]
+        if gaps:
+            names = ", ".join(f"{item['workspace_id']} ({item['reason']})" for item in gaps)
+            raise ValueError(
+                f"workspace registry has unavailable workspaces; retire or restore them first: {names}")
     canaries = runtime.get("canaries")
     if not isinstance(canaries, list) or any(
             not isinstance(c, dict) or set(c) != {"workspace_id", "path"}

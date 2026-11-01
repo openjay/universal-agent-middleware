@@ -30,11 +30,15 @@ CODEOWNERS may be configured for automatic review requests; branch protection en
 
 ## Release Process
 
-Releases follow the workflow in `.github/workflows/release.yml`:
+A release is one frozen pair of artifacts, a wheel and an sdist, built once from the tagged commit. The same bytes are attached to the GitHub Release (with a `SHA256SUMS` file) and uploaded to PyPI by the maintainer; nothing rebuilds them afterwards.
 
-1. Tag with PEP 440 version (e.g. `0.5.1rc1` for preview candidates)
-2. GitHub Release triggers build, attestation, and PyPI publish (Trusted Publishing)
-3. Release notes document supported surfaces and known limitations
+1. Tag the reviewed commit with a PEP 440 version (e.g. `0.6.3`); CI must be green on that commit.
+2. Build the wheel and the sdist once, record their SHA-256 in `SHA256SUMS`, and attach the three files to a draft GitHub Release.
+3. Upload the same two files to PyPI, then publish the GitHub Release.
+4. `.github/workflows/release.yml` runs when the release is published (and on demand for a tag). It builds nothing and publishes nothing: it fails unless the release assets, `SHA256SUMS` and the files PyPI serves agree byte for byte (`tools/verify_release_assets.py`).
+5. Release notes document supported surfaces and known limitations.
+
+No workflow in this repository publishes to PyPI, and a PyPI Trusted Publisher is not part of this process; do not read the verification workflow as one.
 
 ## RFC / Major Changes
 

@@ -38,12 +38,44 @@
       "max_attempts": 3,
       "window_seconds": 900
     },
+    "tunnel_probe_uncertain": {
+      "severity": "P2",
+      "action": "log_only"
+    },
+    "supervisor_cycle_timeout": {
+      "severity": "P2",
+      "action": "log_only"
+    },
     "core_semantic_failure": {
       "severity": "P1",
       "action": "log_only"
     },
     "workspace_degraded": {
       "severity": "P2",
+      "action": "log_only"
+    },
+    "reality_index_stale": {
+      "severity": "P2",
+      "action": "log_only"
+    },
+    "reality_index_missing": {
+      "severity": "P2",
+      "action": "log_only"
+    },
+    "reality_index_policy_mismatch": {
+      "severity": "P2",
+      "action": "log_only"
+    },
+    "reality_index_locked": {
+      "severity": "P2",
+      "action": "log_only"
+    },
+    "reality_index_integrity_failure": {
+      "severity": "P1",
+      "action": "log_only"
+    },
+    "reality_index_schema_incompatible": {
+      "severity": "P1",
       "action": "log_only"
     }
   }

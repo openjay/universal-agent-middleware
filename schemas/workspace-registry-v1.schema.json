@@ -38,7 +38,8 @@
           },
           "kind": {
             "enum": [
-              "git-repository"
+              "git-repository",
+              "filesystem-directory"
             ]
           },
           "capabilities": {
@@ -61,8 +62,61 @@
             "type": "integer",
             "minimum": 1,
             "maximum": 100000
+          },
+          "project_id": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "lifecycle": {
+            "type": "string"
+          },
+          "repository_identity": {
+            "type": "string"
+          },
+          "discovery": {
+            "type": "object"
           }
-        }
+        },
+        "allOf": [
+          {
+            "description": "A directory is not a repository: it can only read files and has no Git identity.",
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "filesystem-directory"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "capabilities": {
+                  "items": {
+                    "const": "filesystem.read"
+                  }
+                }
+              },
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "repository_identity"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "discovery"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        ]
       }
     }
   }

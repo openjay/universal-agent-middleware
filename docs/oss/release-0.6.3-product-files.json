@@ -1,0 +1,238 @@
+{
+  "adopted_release": "These files are byte-identical to the package files of the release the maintainer adopted locally (compared one by one). The whole wheel is not byte-identical to that release's wheel: its metadata, README and project URLs differ, so it has a SHA-256 of its own, published in SHA256SUMS.",
+  "composition": "55 Python modules plus tool_contract.json and task_tool_contract.json",
+  "file_count": 57,
+  "files": [
+    {
+      "path": "universal_agent_middleware/__init__.py",
+      "sha256": "02dc202ee8d60e99222639ad04a8d980116d02a44bab0f21c9d3cd0756ecaf3a"
+    },
+    {
+      "path": "universal_agent_middleware/adapters/__init__.py",
+      "sha256": "d96ed50edb9f6fca9cd8a783a8d1d672adb485c9debdff2150da62bf42432841"
+    },
+    {
+      "path": "universal_agent_middleware/adapters/mcp_sdk.py",
+      "sha256": "ecf9fe8eee6a151fe05c2f4f6d72ad2e33f67297560252221081f3324f822095"
+    },
+    {
+      "path": "universal_agent_middleware/adapters/mcp_task_continuity.py",
+      "sha256": "71d59c3dd85e4fa79bd345c70a99673deb71b1554c551fa127a85aa9cc379eab"
+    },
+    {
+      "path": "universal_agent_middleware/adapters/mcp_task_control.py",
+      "sha256": "df02686102fb717eb4af6159e89002228fca0dd07e33ec4a99925615c298bebf"
+    },
+    {
+      "path": "universal_agent_middleware/adapters/openai_actions.py",
+      "sha256": "26be709d6a84a458f2f508c229dc91db609ec76658c2c2a4d6a997ba43fe2f09"
+    },
+    {
+      "path": "universal_agent_middleware/audit.py",
+      "sha256": "03f778d82bb945d0039e87d3333bd147a41a206d921a5212be83926c726f79ae"
+    },
+    {
+      "path": "universal_agent_middleware/cli.py",
+      "sha256": "d2c52c2fa3a0d1b02079b0a46645eb76a43a3e3d31b12b58b2a7d1df5fb847f7"
+    },
+    {
+      "path": "universal_agent_middleware/consumer.py",
+      "sha256": "3ae00f260c3863558ff633c9541da6ee7a5661d480baf418b073d7a2af5c6cd1"
+    },
+    {
+      "path": "universal_agent_middleware/consumer_cli.py",
+      "sha256": "c4718aafd3b37356a16d11f26a7d6b4093e45ed89fa16fd0e2664d8d874fe042"
+    },
+    {
+      "path": "universal_agent_middleware/context_profile.py",
+      "sha256": "2a4daac38227162f72594edb922009462df6f88a72002ae66c1a14427adab788"
+    },
+    {
+      "path": "universal_agent_middleware/contracts.py",
+      "sha256": "3c2d834036bb0cc88953cc4db8f6433bc3c4e5dd086cb155e9c3f72fcc44bf55"
+    },
+    {
+      "path": "universal_agent_middleware/descriptor_io.py",
+      "sha256": "844439715afc88d0bbfbd7d68fd080bc05819bee1fe094360b8172ff0c16c251"
+    },
+    {
+      "path": "universal_agent_middleware/discovery.py",
+      "sha256": "bae1f02663ae3223b940fa5267c70d320d565cded2ea268e054ddc0cd050d3fa"
+    },
+    {
+      "path": "universal_agent_middleware/doctor.py",
+      "sha256": "c50998e6299c0c30d3e8f9d92d0d459fd57b02441cb09a2cdfe05ff34185185d"
+    },
+    {
+      "path": "universal_agent_middleware/errors.py",
+      "sha256": "5495fd353ffee45e372c6f459900c387352cf4b2aade0b56400f6bdd0e546bfe"
+    },
+    {
+      "path": "universal_agent_middleware/executors/__init__.py",
+      "sha256": "2aaacf61edc42f316eb659aecb45d2ced156a708f7d9cf2cbea730b1c7894646"
+    },
+    {
+      "path": "universal_agent_middleware/exploration.py",
+      "sha256": "f90031dd4afad2b4d141d3e169aad61553c8a236f8082e41c6cc6bd0e4fe31c9"
+    },
+    {
+      "path": "universal_agent_middleware/file_digest.py",
+      "sha256": "6e9e19cf8ba3180ed9407af9ef2c2c9d580592e1ba4a055fe998e8451d3cbb8d"
+    },
+    {
+      "path": "universal_agent_middleware/gateway.py",
+      "sha256": "df3dad16cd9b59bab7fadeaaa2afb65fc3604bee61d64f2f7e76ef28263343c1"
+    },
+    {
+      "path": "universal_agent_middleware/git_readonly.py",
+      "sha256": "0ba66e4ffea18c249ad7f2d63812ca2a91cb3cbb7755df4592b5e7eab0b8eaa4"
+    },
+    {
+      "path": "universal_agent_middleware/git_snapshot.py",
+      "sha256": "ad2dd208dc6f4bf079e58f22ab6037b0c2b5ba789569006392e4b26ebb5fecdb"
+    },
+    {
+      "path": "universal_agent_middleware/harness_adapter.py",
+      "sha256": "bd30189cd65010a418e6880fe20ad2bc75c5c2884eef85c71c46bb475c0f0aa0"
+    },
+    {
+      "path": "universal_agent_middleware/ignore_rules.py",
+      "sha256": "747eb36c7ff0c868188847ecab1d2912e6528c5446d4db94fc2f28f9ab5a1ad2"
+    },
+    {
+      "path": "universal_agent_middleware/installer.py",
+      "sha256": "d0f6a45412c8bdd70cbb7aaee13456a8c33564a47d678391c63492b4b9825ccb"
+    },
+    {
+      "path": "universal_agent_middleware/mcp.py",
+      "sha256": "2bf9f4ff733334232bb042c35a7b1bc88a66c367d2b0a14e07d71e7ffc0a2716"
+    },
+    {
+      "path": "universal_agent_middleware/models.py",
+      "sha256": "67990da31450088b0474153fa673f7bbea7c383c091574c81d791015bd83868f"
+    },
+    {
+      "path": "universal_agent_middleware/northbound.py",
+      "sha256": "a8322b370af4f20a5d21485c6ae2fc2219cfc0739bb92ffd6cdfa61398baaf43"
+    },
+    {
+      "path": "universal_agent_middleware/openapi.py",
+      "sha256": "7d6f2b6099539c7d6b23a10fb2453260824b5da80a9179efec6c5d7b57d7182d"
+    },
+    {
+      "path": "universal_agent_middleware/path_authority.py",
+      "sha256": "baf7da601ae07c709c17752002ec0accad72907a84e87822cb8dfbdaef3a564e"
+    },
+    {
+      "path": "universal_agent_middleware/policy.py",
+      "sha256": "16d77d21f72d819adc8d3d2a717c95df63c068ba419223c842d774c565c8177b"
+    },
+    {
+      "path": "universal_agent_middleware/project.py",
+      "sha256": "760da303f3835bee291b4f240c3b8130a20acc0b139fafa3ef6eec83b4296134"
+    },
+    {
+      "path": "universal_agent_middleware/reality_index.py",
+      "sha256": "7f4ca82f0929c3cb20cff29f4269207de1ee17e0d3b05a729501d251096f28e4"
+    },
+    {
+      "path": "universal_agent_middleware/release.py",
+      "sha256": "3855f696ad61d0f2fb9964b357d94fa3e93f93ee69749c15b3a875b391f6b6e4"
+    },
+    {
+      "path": "universal_agent_middleware/release_acceptance.py",
+      "sha256": "35100e8f1f64b5f497331f63c6728b7080ebd5316a2836161a67c500dad30299"
+    },
+    {
+      "path": "universal_agent_middleware/release_build.py",
+      "sha256": "e8d5057a4abd3645a0429deb122fefbe2194fc424d55c01e2df0c893b0da88c7"
+    },
+    {
+      "path": "universal_agent_middleware/release_config.py",
+      "sha256": "a3b1a9652edd0eb523977c952cb8a6a33fc6db6399290af3a516745ada34e7e5"
+    },
+    {
+      "path": "universal_agent_middleware/release_probe.py",
+      "sha256": "244fd7fa31f9b18e79854382d248f3ef02dc17acd9aac510315d106bdebcec26"
+    },
+    {
+      "path": "universal_agent_middleware/release_process.py",
+      "sha256": "f74a3976ab9859369e4f11d380b5fe01c50ceccb38663d373392c0d4570d6128"
+    },
+    {
+      "path": "universal_agent_middleware/release_seal.py",
+      "sha256": "a73ca6c0109fbaa0d3e6887273cff736c97357c1add5f477e8326305c3ecd224"
+    },
+    {
+      "path": "universal_agent_middleware/resolver.py",
+      "sha256": "f317b4b72987a560bc42d6f45ad7aff346ce566c92d6afd309bb402ac667f093"
+    },
+    {
+      "path": "universal_agent_middleware/results.py",
+      "sha256": "a9758624e1d038764963acf443efeb618bd1656efb6ad61da6542e95b0d2627f"
+    },
+    {
+      "path": "universal_agent_middleware/results_v2.py",
+      "sha256": "f5714c64b96fd52762942a2cea7044131b0e743a88c996834b1bcfcc5611ba90"
+    },
+    {
+      "path": "universal_agent_middleware/root_scope.py",
+      "sha256": "bce9a05ea5497b9c86c4c44dbf0ebccdb0b6662f9289e14fb8cd5e71900e3950"
+    },
+    {
+      "path": "universal_agent_middleware/runtime.py",
+      "sha256": "814daa5b65c92faadee424942d0d0d663de948f947419e3435727b430a697409"
+    },
+    {
+      "path": "universal_agent_middleware/scope_search.py",
+      "sha256": "914f8a45d7555f31e38138cac0addf5c5b9eb3b20a7272ad13499a30b037e2de"
+    },
+    {
+      "path": "universal_agent_middleware/server.py",
+      "sha256": "a088a893cd40cf080c2c1afc1970dc6100abcb3915ced3e500f06ad63eb1b232"
+    },
+    {
+      "path": "universal_agent_middleware/service.py",
+      "sha256": "c849f840079c242e39eae1caefd3145b04609d3b277cd0ae538393d946bfc789"
+    },
+    {
+      "path": "universal_agent_middleware/statefile.py",
+      "sha256": "b409476b74866a4db286b58b4a66bbbf41f3c3a41df9c6d197315b8b78d88b2a"
+    },
+    {
+      "path": "universal_agent_middleware/supervisor.py",
+      "sha256": "e533697a1b683c97d3f0961aa46382ba6a78745b6c80e6213e67e46d87456487"
+    },
+    {
+      "path": "universal_agent_middleware/task_continuity.py",
+      "sha256": "0968908b6f5bf0933a53c5debf3e83154fbf4938b3dcc1bbf15d41896975850f"
+    },
+    {
+      "path": "universal_agent_middleware/task_continuity_control.py",
+      "sha256": "ad3e86153f0feb65ee62d1b501de3bb789baeef8cfee125b0cbab7d40007ac45"
+    },
+    {
+      "path": "universal_agent_middleware/task_control.py",
+      "sha256": "691b1ab38dcc967c77d18e573d71880f3f9e94eb2ec33c1a6a6b6e530da65dbb"
+    },
+    {
+      "path": "universal_agent_middleware/task_profile.py",
+      "sha256": "b785722119072787c0c1f2a6dc359ab7387711128fcbc725c1c840d48ce775f3"
+    },
+    {
+      "path": "universal_agent_middleware/task_tool_contract.json",
+      "sha256": "ffddac7b10c9458a2824f8c94a401f9e580392b2833c7c371b74b5c9abff9486"
+    },
+    {
+      "path": "universal_agent_middleware/tool_contract.json",
+      "sha256": "a46b9afffb88a6e2a51e5897f75d526578f2344a9ef10af839727b616b385ef6"
+    },
+    {
+      "path": "universal_agent_middleware/workspace.py",
+      "sha256": "9b5501cfde3ad9349080be77ab0dfce1c3fa41b432c18f4238e943c16152354b"
+    }
+  ],
+  "release": "0.6.3",
+  "schema": "UAM_RELEASE_PRODUCT_FILES_V1",
+  "what": "SHA-256 of every file of the installed package (src/universal_agent_middleware/**), as the tagged commit holds it; paths are relative to the install directory, so they are the wheel's member names"
+}

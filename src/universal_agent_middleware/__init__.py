@@ -1,3 +1,3 @@
 """Universal Agent Middleware."""
 
-__version__ = "0.5.1rc1"
+__version__ = "0.6.3"

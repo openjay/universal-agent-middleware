@@ -1,15 +1,18 @@
 from __future__ import annotations
 
 import argparse
+import fcntl
 import json
 import os
 import secrets
+import subprocess
 import sys
+from pathlib import Path
 
-from .gateway import MiddlewareGateway
 from .mcp import serve_stdio
 from .openapi import schema as openapi_schema
 from .policy import is_loopback_host
+from .release_seal import SealError, create_seal, write_seal
 from .server import Handler, UAMHTTPServer
 
 
@@ -41,6 +44,14 @@ def parser() -> argparse.ArgumentParser:
     doctor.add_argument("--json", action="store_true", dest="json_output")
     doctor.add_argument("--no-canary", action="store_true")
 
+    index = sub.add_parser("index", help="build or refresh the cross-process reality index")
+    index.add_argument("--registry", required=True)
+    index.add_argument("--state-dir", default=".state")
+    index.add_argument("--scope", dest="scope_id", help="scope to index (omit for all discover scopes)")
+    index.add_argument("--background", action="store_true", help="spawn detached index worker that survives caller exit")
+    index.add_argument("--enrich-git", action="store_true", help="include git metadata enrichment")
+    index.add_argument("--json", action="store_true", dest="json_output")
+
     migrate = sub.add_parser("audit-migrate", help="create a new chain from an explicit offline evidence snapshot")
     migrate.add_argument("--snapshot", required=True)
     migrate.add_argument("--destination", required=True)
@@ -54,13 +65,67 @@ def parser() -> argparse.ArgumentParser:
     openapi.add_argument(
         "--adapter", choices=["generic", "openai-actions"], default="generic"
     )
+
+    release = sub.add_parser("release", help="build immutable release from current HEAD and activate")
+    release.add_argument("--runtime-manifest", required=True)
+    release.add_argument("--dry-run", action="store_true", help="build but do not activate or restart tunnel")
+    release.add_argument("--json", action="store_true", dest="json_output")
+    release.add_argument(
+        "--acceptance", metavar="FILE",
+        help="reviewed declaration of the exact workspace gaps this release may ship with "
+             "(default: any unavailable workspace fails the release)")
+    release.add_argument(
+        "--expect-seal", metavar="FILE",
+        help="sealed activation: never build, and refuse unless the release on disk is exactly the one "
+             "sealed in FILE (see release-seal); checked before the service is stopped")
+
+    seal = sub.add_parser(
+        "release-seal",
+        help="write a seal of an existing release (read-only: nothing is built, executed or activated)")
+    seal.add_argument("--release-dir", required=True, help="the staged release directory to seal")
+    seal.add_argument("--source-root", default=".", help="the Git checkout the release was built from")
+    seal.add_argument("--commit", help="commit the release must have been built from (default: HEAD)")
+    seal.add_argument("--out", required=True, help="seal file to create (never overwritten)")
+    seal.add_argument("--json", action="store_true", dest="json_output")
+
     return p
+
+
+def _spawn_detached_index_worker(
+    *,
+    registry: str,
+    state_dir: str,
+    scope_id: str | None,
+    enrich_git: bool,
+) -> int:
+    """Launch a detached foreground index worker that survives CLI exit."""
+    cmd = [
+        sys.executable,
+        "-m",
+        "universal_agent_middleware.cli",
+        "index",
+        "--registry",
+        registry,
+        "--state-dir",
+        state_dir,
+        "--json",
+    ]
+    if scope_id:
+        cmd.extend(["--scope", scope_id])
+    if enrich_git:
+        cmd.append("--enrich-git")
+    proc = subprocess.Popen(
+        cmd,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        start_new_session=True,
+    )
+    return proc.pid
 
 
 def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
     if args.command in {"audit-migrate", "audit-init"}:
-        from pathlib import Path
         from .audit import migrate_snapshot, initialize_chain
         try:
             if args.command == "audit-migrate":
@@ -127,6 +192,83 @@ def main(argv: list[str] | None = None) -> int:
                 extra = f" — {reason}" if reason else ""
                 print(f"  {name}: {status}{extra}")
         return 0 if report["overall"] == "READY" else 1
+    if args.command == "index":
+        from .gateway import MiddlewareGateway
+
+        if args.background:
+            scopes_path = Path(args.registry).parent / "root_scopes.json"
+            scope_ids: list[str | None]
+            if args.scope_id:
+                scope_ids = [args.scope_id]
+            else:
+                if scopes_path.exists():
+                    raw = json.loads(scopes_path.read_text(encoding="utf-8"))
+                    scope_ids = [
+                        s["scope_id"]
+                        for s in raw.get("scopes", [])
+                        if s.get("authority", {}).get("discover")
+                        and s.get("authority", {}).get("index")
+                    ]
+                else:
+                    scope_ids = [None]
+            results = []
+            for scope_id in scope_ids:
+                pid = _spawn_detached_index_worker(
+                    registry=args.registry,
+                    state_dir=args.state_dir,
+                    scope_id=scope_id,
+                    enrich_git=args.enrich_git,
+                )
+                results.append({
+                    "scope_id": scope_id or "*",
+                    "status": "spawned",
+                    "pid": pid,
+                })
+            payload = {"scopes": results, "count": len(results), "mode": "detached_process"}
+            if args.json_output:
+                print(json.dumps(payload, indent=2, ensure_ascii=False))
+            else:
+                for item in results:
+                    print(f"  {item.get('scope_id')}: spawned (pid={item.get('pid')})")
+            return 0
+
+        gw = MiddlewareGateway(args.registry, args.state_dir)
+        scopes = gw.scopes.list_scopes()
+        target_ids = [args.scope_id] if args.scope_id else [
+            s["scope_id"] for s in scopes if s["authority"].get("discover")
+        ]
+        if args.scope_id and args.scope_id not in target_ids:
+            target_ids = [args.scope_id]
+        results = []
+        state_dir = Path(args.state_dir).expanduser().resolve(strict=False)
+        for scope_id in target_ids:
+            lock_path = state_dir / f"refresh-{scope_id}.lock"
+            lock_path.parent.mkdir(parents=True, exist_ok=True)
+            fd = lock_path.open("a+b")
+            try:
+                fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+                results.append({"scope_id": scope_id, "status": "skipped",
+                                "reason": "another index worker is running"})
+                fd.close()
+                continue
+            try:
+                results.append(gw.index_scope(
+                    scope_id,
+                    enrich_git=args.enrich_git,
+                    background=args.background,
+                ))
+            finally:
+                fcntl.flock(fd, fcntl.LOCK_UN)
+                fd.close()
+        payload = {"scopes": results, "count": len(results)}
+        if args.json_output:
+            print(json.dumps(payload, indent=2, ensure_ascii=False))
+        else:
+            for item in results:
+                status = item.get("status", item.get("total_projects", "ok"))
+                print(f"  {item.get('scope_id')}: {status}")
+        return 0
     if args.command == "mcp-stdio":
         return serve_stdio(MiddlewareGateway(args.registry, args.state_dir))
     if args.command == "mcp-sdk-stdio":
@@ -138,6 +280,40 @@ def main(argv: list[str] | None = None) -> int:
         )
         server.run(transport="stdio")
         return 0
+    if args.command == "release-seal":
+        try:
+            seal = create_seal(Path(args.source_root).resolve(), Path(args.release_dir), commit=args.commit)
+            digest = write_seal(Path(args.out), seal)
+        except SealError as exc:
+            print(f"release-seal refused: {exc}", file=sys.stderr)
+            return 1
+        summary = {"seal": str(Path(args.out).resolve()), "sha256": digest, "release_id": seal["release_id"],
+                   "commit": seal["source"]["commit"], "package_files": len(seal["package_files"]),
+                   "dependencies": len(seal["dependencies"])}
+        print(json.dumps(summary, indent=2) if args.json_output else
+              "\n".join(f"{key}: {value}" for key, value in summary.items()))
+        return 0
+    if args.command == "release":
+        from .release import build_and_activate
+        # Only a sealed run changes the call shape; the legacy invocation is passed through unchanged.
+        sealed = {"seal_path": args.expect_seal} if args.expect_seal else {}
+        result = build_and_activate(
+            manifest_path=args.runtime_manifest,
+            dry_run=args.dry_run,
+            acceptance_path=args.acceptance,
+            **sealed,
+        )
+        if args.json_output:
+            print(json.dumps(result, indent=2, ensure_ascii=False))
+        else:
+            print(f"release: {result['overall']} (accepted={result['accepted']}, exit={result['exit_code']})")
+            if result.get("release_id"):
+                print(f"  id: {result['release_id']}")
+            if result.get("doctor_overall"):
+                print(f"  doctor: {result['doctor_overall']}")
+            for step in result.get("steps", []):
+                print(f"  {step['name']}: {step['status']}")
+        return result["exit_code"]
     if args.command == "serve":
         if not is_loopback_host(args.host) and not args.allow_non_loopback:
             print(

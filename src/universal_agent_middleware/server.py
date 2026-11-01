@@ -2,13 +2,12 @@ from __future__ import annotations
 
 import hmac
 import json
-import os
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Any
 from urllib.parse import parse_qs, urlparse
 
-from .errors import UAMError
+from .errors import UAMError, error_body
 from .gateway import MiddlewareGateway
 from .mcp import MCPDispatcher, MCP_PROTOCOL_VERSION
 from .openapi import schema as openapi_schema
@@ -165,11 +164,19 @@ class Handler(BaseHTTPRequestHandler):
                         or (g.audit.freeze_file and g.audit.freeze_file.exists())):
                     return self._json(HTTPStatus.SERVICE_UNAVAILABLE, {"status": "frozen"})
                 ws = g.registry.list()
+                coverage = g.registry.coverage()
                 import universal_agent_middleware
                 return self._json(HTTPStatus.OK, {
-                    "status": "ok",
+                    "status": "ok" if coverage["complete"] else "degraded",
                     "version": universal_agent_middleware.__version__,
                     "workspace_count": len(ws),
+                    # Unauthenticated endpoint: counts only, no workspace ids or instance identity.
+                    "coverage": {
+                        "complete": coverage["complete"],
+                        "registered": coverage["registered"],
+                        "available": coverage["available"],
+                        "unavailable_count": len(coverage["unavailable"]),
+                    },
                     "checked_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                 })
             except Exception:
@@ -233,10 +240,7 @@ class Handler(BaseHTTPRequestHandler):
                 return self._json(HTTPStatus.NOT_FOUND, {"error": "not_found"})
             self._json(HTTPStatus.OK, result)
         except (UAMError, ValueError, json.JSONDecodeError) as exc:
-            self._json(
-                HTTPStatus.BAD_REQUEST,
-                {"error": type(exc).__name__, "message": str(exc)},
-            )
+            self._json(HTTPStatus.BAD_REQUEST, error_body(exc))
         except Exception:
             self._json(HTTPStatus.INTERNAL_SERVER_ERROR, {"error": "internal_error"})
 
@@ -284,9 +288,6 @@ class Handler(BaseHTTPRequestHandler):
                 return self._json(HTTPStatus.NOT_FOUND, {"error": "not_found"})
             self._json(HTTPStatus.OK, result)
         except (UAMError, ValueError, json.JSONDecodeError) as exc:
-            self._json(
-                HTTPStatus.BAD_REQUEST,
-                {"error": type(exc).__name__, "message": str(exc)},
-            )
+            self._json(HTTPStatus.BAD_REQUEST, error_body(exc))
         except Exception:
             self._json(HTTPStatus.INTERNAL_SERVER_ERROR, {"error": "internal_error"})

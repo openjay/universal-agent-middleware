@@ -25,6 +25,15 @@
       "capabilities": ["filesystem.read", "git.observe"],
       "max_file_bytes": 524288,
       "max_search_files": 5000
+    },
+    {
+      "workspace_id": "project-notes",
+      "label": "Project notes (a plain folder, not a Git repository)",
+      "root": "/path/to/your/notes",
+      "kind": "filesystem-directory",
+      "capabilities": ["filesystem.read"],
+      "max_file_bytes": 524288,
+      "max_search_files": 5000
     }
   ]
 }

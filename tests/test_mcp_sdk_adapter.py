@@ -37,7 +37,8 @@ class MCPSDKAdapterTests(unittest.TestCase):
         cls.tools = cls.server._tool_manager._tools
 
     def test_01_correct_tool_count(self):
-        self.assertEqual(len(self.tools), 19)
+        # READ_ONLY_SESSION_PROFILE_V3: the 19 tools of V2 plus uam_file_digest.
+        self.assertEqual(len(self.tools), 20)
 
     def test_02_all_required_tools_present(self):
         required = {
@@ -46,6 +47,7 @@ class MCPSDKAdapterTests(unittest.TestCase):
             "uam_session_bootstrap",
             "uam_tree",
             "uam_read_file",
+            "uam_file_digest",
             "uam_search_text",
             "uam_git_status",
             "uam_git_diff",
@@ -146,6 +148,23 @@ class MCPSDKAdapterTests(unittest.TestCase):
             data = json.loads(result)
             self.assertEqual(data["integrity"], "PASS")
             self.assertGreater(data["records"], 0)
+        asyncio.run(run())
+
+    def test_11_list_workspaces_preserves_views(self):
+        async def run():
+            fn = self.tools["uam_list_workspaces"].fn
+            result = await fn(ctx=None)
+            data = json.loads(result)
+            self.assertIn("registered", data)
+            self.assertIn("discovered", data)
+            self.assertIn("eligible", data)
+            self.assertIn("workspaces", data)
+            self.assertEqual(data["schema_version"], "workspace-list-v1")
+            self.assertEqual(data["view"], "all")
+            registered_ids = {w["workspace_id"] for w in data["registered"]}
+            self.assertIn("workspace-a", registered_ids)
+            self.assertIsInstance(data["discovered"], list)
+            self.assertIsInstance(data["eligible"], list)
         asyncio.run(run())
 
 

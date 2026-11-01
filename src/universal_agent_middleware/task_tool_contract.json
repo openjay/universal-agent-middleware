@@ -1,0 +1,13 @@
+{
+  "uam_attempt_end": "18d126c25107a028ca78cfd7502c7d219a662e3793a7813bf238c97a72c38d63",
+  "uam_attempt_result": "e40fd457ab657f982772fc746bd14a798e56da23e978d6abd65dc65118df9ed9",
+  "uam_attempt_start": "6b2fd2f131ccdd14e84ff15460bf7934147cf6afb8d1d13ad0b874fa9f8eb9ab",
+  "uam_continuity_context_package": "f091ca34305316df67762eaf8f68f8f694db32f5ad4a13a55909a147219b1576",
+  "uam_continuity_deliveries_for_task": "b29fb496f651750037a65238ffbfcc9b15d914ff2c9eb93f0580dd6f522ae888",
+  "uam_continuity_delivery_send": "3f98b23398e92e171ae40f3fa0845226c2cd311644eeccbbce2100ee9cb5d470",
+  "uam_continuity_handover": "686b13787681673e3d7bae6cdadd36935d71bd494b1805d272c91cf01bc1679f",
+  "uam_delivery_cancel": "4342b5826948e51a62329b889119186af3297e42c19be4052d191f33cbe5d3cb",
+  "uam_delivery_get": "9458d80f9ce8440e42ec163d57e6e3db96737574f7b46f85b399169de34aa092",
+  "uam_delivery_inbox": "15368f29e0f0a0c7995d8dfe83eda3b084383172ccdf7d288bfd4177ee14f11f",
+  "uam_delivery_send": "5f09ff71998b3cdb4ac0f49c2ef789ad6294d8fad0a15cc340e9eb82081eac3e"
+}

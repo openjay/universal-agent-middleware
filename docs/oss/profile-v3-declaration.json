@@ -1,0 +1,518 @@
+{
+  "adopted_in_production": true,
+  "adoption": {
+    "date": "2026-10-31",
+    "published_in": "0.6.3",
+    "scope": "the maintainer's own supervised runtime (one operator, one host)"
+  },
+  "baseline": {
+    "contract_sha256": "525174f161bf6c5686a72ceffe44db489555ca116bd7f9c2183b737b096c146b",
+    "fingerprints": {
+      "uam_discover_projects": {
+        "contract": "ab9c248a4256b23c0aa016e391f18e3e64925b6cb6a3c49c52a1b96b355bb65b",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "b5d85676406a9aeab810f6de74bbe9c48afbe5c087fa8e4d5b95064e99819270",
+          "inputSchema": "f766d7808bbf2a1b97e5906698f1c3b8e1f14055cfe42aedd32704d0f3065c73",
+          "name": "f68447f40f3f0e71850064debb7ca87ced4cf149ba5179049a8496b3b2f1f8ff",
+          "outputSchema": "8314442d73365585139a2057bda58e40d27798047c98483260c7d4d75641dcd0"
+        }
+      },
+      "uam_explain_coverage": {
+        "contract": "4a82ad4d8c43fcf6befdd059715fe52fad181dc98c9846fc0da88a6d7cdac12e",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "bdb701fffa9955ecc8697260156150cd28442b6fea31834bb7521aa978a84cd2",
+          "inputSchema": "68ced6abe11db6ef285353a767a0c93ba3358d35bee09aced99bcca94b1f3b72",
+          "name": "338c5f16468b8b2037e22a794525430968061d44648ee2627372d378883115ba",
+          "outputSchema": "c18fae8af71de5842e5901ebdc6db84e291c4ba1a661f745c75bb0d3ac36c666"
+        }
+      },
+      "uam_explore": {
+        "contract": "db501cb5ace418d6e848c231349a7531c3c00e70735e0ec86bc2e4b3ce6197af",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "419f964e9994b7621f7807b89daa1f9a7e9f7686163124515d3c2272c23c0ecb",
+          "inputSchema": "370e86187c38b7ac23bcfe79412d8a2018f73e8683ada6a28a9e1febf4bc2b7e",
+          "name": "a3a6f11e00765ad60b0a9445bba7f475c119e1f463f99799a602317419f39eda",
+          "outputSchema": "0d4933d6ab7b559e665726fd8e56f154b790a71ae12ad7459247977b4f756a7e"
+        }
+      },
+      "uam_git_diff": {
+        "contract": "debab4ad442e53acf4eb896d20a63b29a3b1755f30ca2c86c2b9719e837806ed",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "25ec4f5e28b730a7c1f64d865e62e3efeccda26860f2363d7f367c927afcf237",
+          "inputSchema": "5c1215b575e83cfb0f3c2e0017be9a0c96a365043b2e9d8029176787319c183d",
+          "name": "585723ffcadbe90b5e86c01e9968689a3d6a7de51f92df4a30fec3dd6c19bb2b",
+          "outputSchema": "fdf39466c794f75c5533af5cfac40bc0d25c7c65f5eb99f16d92632ee0352477"
+        }
+      },
+      "uam_git_log": {
+        "contract": "b6d8252b0f9ebf14a6c6a1153144ea1be4e2eb9af48f88b805ff67e6b1e14067",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "1e70d49ad716d7f49369e9bbf39fdb37be7603e3092a826f6aabb627ef97740d",
+          "inputSchema": "4afc9473e7dabfd7704bcdd51e17f796c709da40d3d062c3a831e0aecf8992a0",
+          "name": "f5ed7cf9995aad4a7d022d20595c09956a48fbd958ef8abdf28d008cad8d0219",
+          "outputSchema": "ac58413412c24169dd7cdd6e8e52158844fc6641788fb5e9d8a78e4fb692b26e"
+        }
+      },
+      "uam_git_status": {
+        "contract": "3013845f2c79266907d896ca761188e6d1f2d6a06af56ae149c6eced7a50f13f",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "01e18e7e47e6398c68d5a3b9c604b5a66bff7b91441afeb43345a83283d142ea",
+          "inputSchema": "9b4f06a645c270a4e3b3b157c6e4a8abe7bba550d2825649e5520ac8f4ead904",
+          "name": "fb71122d56a828a7073e460a93871c4a5f2dfc4b45620495d032f9f9f931b8ac",
+          "outputSchema": "479270947ce1efe0f2938c1135f3ff7751874807f77dae946b158a648378ef4d"
+        }
+      },
+      "uam_list_project_instances": {
+        "contract": "d0a59e1c8130458fd1a067d77c0ace81f7a97a0f323d50cd439cbb43fed3ecfc",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "5e1d11bdb9e5ce0b8c02ea0b1f36177ce5d53f60ecb06ea870a76969d5001ae8",
+          "inputSchema": "70c4fba5f2dcf54c575d7bfb8adf148d4f98f4e3458dae6be8058f52ad8b5bd3",
+          "name": "f411a9028a09d405e0984fdda37a176642799d3519c99f8b24779b38f6d71978",
+          "outputSchema": "46ababe21bce66f712625df73ff0d0764f91d73aa4da85998b380b1a322d4b64"
+        }
+      },
+      "uam_list_scopes": {
+        "contract": "35065426ccdf1e3f5430811c3aa1dccf601112c70b6d019568cd5759ae689b93",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "2d96188381e23cb8ec02a67ac11d6e0c8944273df557e9a8f5fe442dd3e06117",
+          "inputSchema": "c93fe28c2d9c80fc6bdb89b5be97a23645102f158b15d95d9c5c5af3f26cfd2f",
+          "name": "3a356861c9801f076f50f54ec99d8d140d94d5a5abe2b575b13b9a70fb18c0b3",
+          "outputSchema": "0c465f8a3c4335907fae15f9e3514d5158c6352ae56a5c1c0ae4c62862537d61"
+        }
+      },
+      "uam_list_workspaces": {
+        "contract": "2b84b27b3562be6ca18d3fcc03bee0dc2985e54b825dec40065ee97d3395af88",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "01a03e5886fac6243ef45e5b195a57f78117de83bbaf3112152757b36a89f614",
+          "inputSchema": "5f34173a246ef5c04d17e2038f0ba041dbb2d110e49ab587631c0486d7a413ce",
+          "name": "a2ec90e6f48fa224c41556f7340d1b422ee00b7333ea604ac9d0da97ebabd798",
+          "outputSchema": "d0b62a28c5764f4eab7012e2bf87552cfb212f6a8b997bd6cab0cde43a358d85"
+        }
+      },
+      "uam_project_reality": {
+        "contract": "1a02d7bb43a54b39efb6af5c3ffbc62c5cbf55ed12b24f058589b9aff877b69b",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "d3c757af909293cd907fc1d220ecc4ab7004f260e9b7890740686b742e46a667",
+          "inputSchema": "600e209e0d55e8a226e882e8d51c3cdeb8061e0e9a70619578ab398af7f3ab6b",
+          "name": "1035cff9ab002481d01cd75ecac69b440eee46e4b8095b3446d3f6845389c3bd",
+          "outputSchema": "e57aef06a6f4f6290333c44a1cecb8180200f24e1b049ca6fe87ad84a9d1bb54"
+        }
+      },
+      "uam_read_file": {
+        "contract": "8694bf17b00024141831f21ce894a8557ed4da024c573ba9eb507a27d2cce4eb",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "3fa749d94ef9c10ab91f1dfe1217366a2e322cf552d0cc60e75e979b09e38238",
+          "inputSchema": "97e57be02bf6fa9827a042b42f9b2cd64e73f52c94f9968f023a9925b460831c",
+          "name": "e951eec22aba43a7745c95dc15db5e3da37530e25427696b47168617b0d3a2ab",
+          "outputSchema": "ad6002211e7bcda43f004b0cc39beee03a0c9364fcb066ccc8968ef5b4ee0c49"
+        }
+      },
+      "uam_scope_inventory": {
+        "contract": "b12e7b9f0513cc9f0d52c549b5186f59b868f2ed763eeffcdba8e756bd4b615b",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "51978d3c985fd6b3295d051436917412bb0b948a4c05dffbf900c7435e49e944",
+          "inputSchema": "0d824853c595a8bf9f75bda7103abe855f763862f23bb7e3b97a47a047837c04",
+          "name": "328b619c4b7e85c7f5212be073f1af9e73697cbaa4b57d6074615ba4f728257e",
+          "outputSchema": "d540b09e4147811e239b097ed0c84e6504d5afea1e47fc231f4471880c58de42"
+        }
+      },
+      "uam_search_scope": {
+        "contract": "3063a3b40e97c53d27c45482306c44c0b1107a02df0ef308b50f614bbaea3ade",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "3353a55ff77810107eecd43f5e6257c140838c1664cefbcef4a2a4f80073e5f8",
+          "inputSchema": "35a176f0cc1c0c6cf3ad463156478a150cf7625c5eb5f75e8acfdd9d2a269b94",
+          "name": "21b661ec84434aadda469e4c1e425e0e1b4571c12b459c5d9d35abc06bf92cb0",
+          "outputSchema": "25483a2ef6f5c4337aeb48b8f6df5dd9434700e90a6146726d1b250b514b55eb"
+        }
+      },
+      "uam_search_text": {
+        "contract": "04c431df55b824d7158fef537554f1bdd1c1ffeb8e045e176dfa1f7050d77e36",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "620449436e99f6bb49e5c454adec8184425f7b923860b2f3cce648d79deea8b4",
+          "inputSchema": "0386d54b359c4885764804e08b8584ba23718d0f5827132a6194dc7db465065c",
+          "name": "c3ea7f3c03365cedd13e4ef6ec529989781c593f43f9a5b2fcbcae23d5b654dd",
+          "outputSchema": "7eaf7f11fbda666dcb2130c4db1f8c265c879768b5fdb1dfa83420a5b7c56d2a"
+        }
+      },
+      "uam_session_bootstrap": {
+        "contract": "4dffa99e7bd2b58f82849ff8f4fc5107f581f7dd9ca865b617101f2e85164b07",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "7cfb24db1d59a7e963ea659180760d3c25c212ccdbb86539d97b811e4b9cf0a0",
+          "inputSchema": "13bd31c78e2a1055aa194dcb1ffefe9e47ebca974f519c6c7de4220647af38c4",
+          "name": "21c9b89649ab6ce89ef6f6b326b8a436603d681568055cd2a70fecff72533f5c",
+          "outputSchema": "db77c0b11b0c229193534da5649d41ba174a671ab3c159643b02b9e4c7f2f774"
+        }
+      },
+      "uam_tree": {
+        "contract": "62a4e6c770ea19ccb91c0c41816e3b3efe0d6389b29103a01f06b36a7d706ed8",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "0726ac0cb5c12051af65685448b833a987a7d5dbdf8d3619dbaabbe126865ef2",
+          "inputSchema": "e3d775bd37e9426862edeffc30e22a56d4ab497823c3fe087d25b700ddd642db",
+          "name": "6fa898d76fea75533129277c1bddd035e6e72700d801bbeda2178927dcee556e",
+          "outputSchema": "4fbf00398e0ac4c028fca5e7b1db5b0005858898580e103fd7602cf8659e6110"
+        }
+      },
+      "uam_verify_audit": {
+        "contract": "9bd4514ce89407dc35ef3c7551f801afbe25679d308123d3456ea66791c7f958",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "fea4e30c774efe88dabb0a3d0cd73ef8cfb1a5c2de239e5fb59fbbcad0dc1da3",
+          "inputSchema": "5cfd84f7e234dc7c9872de6ab349b09b893c6071093eeea2410f80fe1add3c04",
+          "name": "bfc3e7683e32979315d3d89273d752b25f4050c7003107fefa62bcdaf5a6f85a",
+          "outputSchema": "6b6a741289bc3b082f233e405db793373f5a8cbfdd4f92d264e915c4c3fcae3f"
+        }
+      },
+      "uam_what_am_i_missing": {
+        "contract": "cb4579b1054b3f5dc551200e1def169171ed2b52def58da1652708da536a9f76",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "d085f567f7d43b197cb43d04e9fbda1e6beb1fdf9ac00db0a834adfea430c649",
+          "inputSchema": "c66de71a10d1b78a5564f65ade6187bb5ff6cb3d92ed96ea5dc950422a996f54",
+          "name": "51ff9fe036f3ffbceb61c3b2b59a8d8472918989ffd6c46181e4829dc1281b2b",
+          "outputSchema": "54750d38bb67ed2a0c203ae92fdb140ff9cafba458474daf6c62aeb6a45a6c57"
+        }
+      },
+      "uam_workspace_snapshot": {
+        "contract": "af974d7e10848606588d4c7ebf071093555f9c797cd35b0f3f3f24eab0f6b5a5",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "452bf746182fcd43bba043c207508ec6040766a4d4c3b072eef81e1bf91058e8",
+          "inputSchema": "27a379efed4da73ecf437a31f94d98450338379dc723dd7c383506e516558dcd",
+          "name": "adb60220807bb8ed92b577c93488336ebe64a4e19dbf3cce5548800547b5fbe4",
+          "outputSchema": "33bb870bff0f199e62df87e9ffca12a26edb9154dc71e7b616c3e1e39b6dcb38"
+        }
+      }
+    },
+    "package_version": "0.6.0",
+    "profile": "READ_ONLY_SESSION_PROFILE_V2",
+    "source_commit": "e75fe4c88e438a88e52dc56886894930b536ad23",
+    "tool_count": 19,
+    "tools": [
+      "uam_discover_projects",
+      "uam_explain_coverage",
+      "uam_explore",
+      "uam_git_diff",
+      "uam_git_log",
+      "uam_git_status",
+      "uam_list_project_instances",
+      "uam_list_scopes",
+      "uam_list_workspaces",
+      "uam_project_reality",
+      "uam_read_file",
+      "uam_scope_inventory",
+      "uam_search_scope",
+      "uam_search_text",
+      "uam_session_bootstrap",
+      "uam_tree",
+      "uam_verify_audit",
+      "uam_what_am_i_missing",
+      "uam_workspace_snapshot"
+    ]
+  },
+  "candidate": {
+    "contract_sha256": "89aba78326e7e88d32b159dc8fccd6911bfd136d925df3dd2ca84ae7692d0c30",
+    "fingerprints": {
+      "uam_discover_projects": {
+        "contract": "ab9c248a4256b23c0aa016e391f18e3e64925b6cb6a3c49c52a1b96b355bb65b",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "b5d85676406a9aeab810f6de74bbe9c48afbe5c087fa8e4d5b95064e99819270",
+          "inputSchema": "f766d7808bbf2a1b97e5906698f1c3b8e1f14055cfe42aedd32704d0f3065c73",
+          "name": "f68447f40f3f0e71850064debb7ca87ced4cf149ba5179049a8496b3b2f1f8ff",
+          "outputSchema": "8314442d73365585139a2057bda58e40d27798047c98483260c7d4d75641dcd0"
+        }
+      },
+      "uam_explain_coverage": {
+        "contract": "4a82ad4d8c43fcf6befdd059715fe52fad181dc98c9846fc0da88a6d7cdac12e",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "bdb701fffa9955ecc8697260156150cd28442b6fea31834bb7521aa978a84cd2",
+          "inputSchema": "68ced6abe11db6ef285353a767a0c93ba3358d35bee09aced99bcca94b1f3b72",
+          "name": "338c5f16468b8b2037e22a794525430968061d44648ee2627372d378883115ba",
+          "outputSchema": "c18fae8af71de5842e5901ebdc6db84e291c4ba1a661f745c75bb0d3ac36c666"
+        }
+      },
+      "uam_explore": {
+        "contract": "db501cb5ace418d6e848c231349a7531c3c00e70735e0ec86bc2e4b3ce6197af",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "419f964e9994b7621f7807b89daa1f9a7e9f7686163124515d3c2272c23c0ecb",
+          "inputSchema": "370e86187c38b7ac23bcfe79412d8a2018f73e8683ada6a28a9e1febf4bc2b7e",
+          "name": "a3a6f11e00765ad60b0a9445bba7f475c119e1f463f99799a602317419f39eda",
+          "outputSchema": "0d4933d6ab7b559e665726fd8e56f154b790a71ae12ad7459247977b4f756a7e"
+        }
+      },
+      "uam_file_digest": {
+        "contract": "163119fd00221df8ec7b9caf7cd4304fb2074e0419166c901247f13994feaacc",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "187ba3fc356eec87f5cc2cb123d382c03549c6c275602aa9cca2b2d02440045e",
+          "inputSchema": "b6f5088cd5fed9a5a4fc450966138b100cab0894dc14ac3204d017fb34f9e822",
+          "name": "064e817599915a8121b2ba18dcb6d5788202f01f378d305fbabf930c1b2eceb9",
+          "outputSchema": "1ddaf72fa94d7c639434d3de1cc8ed21390d6265cf09766db8bdf64a9c759e84"
+        }
+      },
+      "uam_git_diff": {
+        "contract": "debab4ad442e53acf4eb896d20a63b29a3b1755f30ca2c86c2b9719e837806ed",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "25ec4f5e28b730a7c1f64d865e62e3efeccda26860f2363d7f367c927afcf237",
+          "inputSchema": "5c1215b575e83cfb0f3c2e0017be9a0c96a365043b2e9d8029176787319c183d",
+          "name": "585723ffcadbe90b5e86c01e9968689a3d6a7de51f92df4a30fec3dd6c19bb2b",
+          "outputSchema": "fdf39466c794f75c5533af5cfac40bc0d25c7c65f5eb99f16d92632ee0352477"
+        }
+      },
+      "uam_git_log": {
+        "contract": "b6d8252b0f9ebf14a6c6a1153144ea1be4e2eb9af48f88b805ff67e6b1e14067",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "ec85fc19ffa69ea0c58a97be82bfb5817ab7c0361fff807fb9fcabcefbc8172d",
+          "inputSchema": "4afc9473e7dabfd7704bcdd51e17f796c709da40d3d062c3a831e0aecf8992a0",
+          "name": "f5ed7cf9995aad4a7d022d20595c09956a48fbd958ef8abdf28d008cad8d0219",
+          "outputSchema": "ac58413412c24169dd7cdd6e8e52158844fc6641788fb5e9d8a78e4fb692b26e"
+        }
+      },
+      "uam_git_status": {
+        "contract": "3013845f2c79266907d896ca761188e6d1f2d6a06af56ae149c6eced7a50f13f",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "dd8a4e0951bc45253a88d5175fc1024beeb538dda595d04f8928d6bb283d26e6",
+          "inputSchema": "9b4f06a645c270a4e3b3b157c6e4a8abe7bba550d2825649e5520ac8f4ead904",
+          "name": "fb71122d56a828a7073e460a93871c4a5f2dfc4b45620495d032f9f9f931b8ac",
+          "outputSchema": "479270947ce1efe0f2938c1135f3ff7751874807f77dae946b158a648378ef4d"
+        }
+      },
+      "uam_list_project_instances": {
+        "contract": "d0a59e1c8130458fd1a067d77c0ace81f7a97a0f323d50cd439cbb43fed3ecfc",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "c3283e10b060cd84f66df5368e15a074770e3d4e6b56f69988191b1c2876b341",
+          "inputSchema": "70c4fba5f2dcf54c575d7bfb8adf148d4f98f4e3458dae6be8058f52ad8b5bd3",
+          "name": "f411a9028a09d405e0984fdda37a176642799d3519c99f8b24779b38f6d71978",
+          "outputSchema": "46ababe21bce66f712625df73ff0d0764f91d73aa4da85998b380b1a322d4b64"
+        }
+      },
+      "uam_list_scopes": {
+        "contract": "35065426ccdf1e3f5430811c3aa1dccf601112c70b6d019568cd5759ae689b93",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "2d96188381e23cb8ec02a67ac11d6e0c8944273df557e9a8f5fe442dd3e06117",
+          "inputSchema": "c93fe28c2d9c80fc6bdb89b5be97a23645102f158b15d95d9c5c5af3f26cfd2f",
+          "name": "3a356861c9801f076f50f54ec99d8d140d94d5a5abe2b575b13b9a70fb18c0b3",
+          "outputSchema": "0c465f8a3c4335907fae15f9e3514d5158c6352ae56a5c1c0ae4c62862537d61"
+        }
+      },
+      "uam_list_workspaces": {
+        "contract": "2b84b27b3562be6ca18d3fcc03bee0dc2985e54b825dec40065ee97d3395af88",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "1fea064e46f0c413183c17334b3e8e565233eac9f71af54975dfe09d66506b8f",
+          "inputSchema": "5f34173a246ef5c04d17e2038f0ba041dbb2d110e49ab587631c0486d7a413ce",
+          "name": "a2ec90e6f48fa224c41556f7340d1b422ee00b7333ea604ac9d0da97ebabd798",
+          "outputSchema": "d0b62a28c5764f4eab7012e2bf87552cfb212f6a8b997bd6cab0cde43a358d85"
+        }
+      },
+      "uam_project_reality": {
+        "contract": "1a02d7bb43a54b39efb6af5c3ffbc62c5cbf55ed12b24f058589b9aff877b69b",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "ca238111838401cc8982ae2b1596509d8e9ca6ddc02803d5343efca303ccb93b",
+          "inputSchema": "600e209e0d55e8a226e882e8d51c3cdeb8061e0e9a70619578ab398af7f3ab6b",
+          "name": "1035cff9ab002481d01cd75ecac69b440eee46e4b8095b3446d3f6845389c3bd",
+          "outputSchema": "e57aef06a6f4f6290333c44a1cecb8180200f24e1b049ca6fe87ad84a9d1bb54"
+        }
+      },
+      "uam_read_file": {
+        "contract": "8694bf17b00024141831f21ce894a8557ed4da024c573ba9eb507a27d2cce4eb",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "3fa749d94ef9c10ab91f1dfe1217366a2e322cf552d0cc60e75e979b09e38238",
+          "inputSchema": "97e57be02bf6fa9827a042b42f9b2cd64e73f52c94f9968f023a9925b460831c",
+          "name": "e951eec22aba43a7745c95dc15db5e3da37530e25427696b47168617b0d3a2ab",
+          "outputSchema": "ad6002211e7bcda43f004b0cc39beee03a0c9364fcb066ccc8968ef5b4ee0c49"
+        }
+      },
+      "uam_scope_inventory": {
+        "contract": "b12e7b9f0513cc9f0d52c549b5186f59b868f2ed763eeffcdba8e756bd4b615b",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "51978d3c985fd6b3295d051436917412bb0b948a4c05dffbf900c7435e49e944",
+          "inputSchema": "0d824853c595a8bf9f75bda7103abe855f763862f23bb7e3b97a47a047837c04",
+          "name": "328b619c4b7e85c7f5212be073f1af9e73697cbaa4b57d6074615ba4f728257e",
+          "outputSchema": "d540b09e4147811e239b097ed0c84e6504d5afea1e47fc231f4471880c58de42"
+        }
+      },
+      "uam_search_scope": {
+        "contract": "3063a3b40e97c53d27c45482306c44c0b1107a02df0ef308b50f614bbaea3ade",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "0926abe74f2da7509ea8bcdd917cca40e5feddc6d293240e0e620ac00e59a3b4",
+          "inputSchema": "35a176f0cc1c0c6cf3ad463156478a150cf7625c5eb5f75e8acfdd9d2a269b94",
+          "name": "21b661ec84434aadda469e4c1e425e0e1b4571c12b459c5d9d35abc06bf92cb0",
+          "outputSchema": "25483a2ef6f5c4337aeb48b8f6df5dd9434700e90a6146726d1b250b514b55eb"
+        }
+      },
+      "uam_search_text": {
+        "contract": "04c431df55b824d7158fef537554f1bdd1c1ffeb8e045e176dfa1f7050d77e36",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "620449436e99f6bb49e5c454adec8184425f7b923860b2f3cce648d79deea8b4",
+          "inputSchema": "0386d54b359c4885764804e08b8584ba23718d0f5827132a6194dc7db465065c",
+          "name": "c3ea7f3c03365cedd13e4ef6ec529989781c593f43f9a5b2fcbcae23d5b654dd",
+          "outputSchema": "7eaf7f11fbda666dcb2130c4db1f8c265c879768b5fdb1dfa83420a5b7c56d2a"
+        }
+      },
+      "uam_session_bootstrap": {
+        "contract": "4dffa99e7bd2b58f82849ff8f4fc5107f581f7dd9ca865b617101f2e85164b07",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "a1793fc41b6e49f98a966d4a3d300db3175a90b7cde3770346ac24edab9e0a1b",
+          "inputSchema": "13bd31c78e2a1055aa194dcb1ffefe9e47ebca974f519c6c7de4220647af38c4",
+          "name": "21c9b89649ab6ce89ef6f6b326b8a436603d681568055cd2a70fecff72533f5c",
+          "outputSchema": "db77c0b11b0c229193534da5649d41ba174a671ab3c159643b02b9e4c7f2f774"
+        }
+      },
+      "uam_tree": {
+        "contract": "62a4e6c770ea19ccb91c0c41816e3b3efe0d6389b29103a01f06b36a7d706ed8",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "0726ac0cb5c12051af65685448b833a987a7d5dbdf8d3619dbaabbe126865ef2",
+          "inputSchema": "e3d775bd37e9426862edeffc30e22a56d4ab497823c3fe087d25b700ddd642db",
+          "name": "6fa898d76fea75533129277c1bddd035e6e72700d801bbeda2178927dcee556e",
+          "outputSchema": "4fbf00398e0ac4c028fca5e7b1db5b0005858898580e103fd7602cf8659e6110"
+        }
+      },
+      "uam_verify_audit": {
+        "contract": "9bd4514ce89407dc35ef3c7551f801afbe25679d308123d3456ea66791c7f958",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "fea4e30c774efe88dabb0a3d0cd73ef8cfb1a5c2de239e5fb59fbbcad0dc1da3",
+          "inputSchema": "5cfd84f7e234dc7c9872de6ab349b09b893c6071093eeea2410f80fe1add3c04",
+          "name": "bfc3e7683e32979315d3d89273d752b25f4050c7003107fefa62bcdaf5a6f85a",
+          "outputSchema": "6b6a741289bc3b082f233e405db793373f5a8cbfdd4f92d264e915c4c3fcae3f"
+        }
+      },
+      "uam_what_am_i_missing": {
+        "contract": "cb4579b1054b3f5dc551200e1def169171ed2b52def58da1652708da536a9f76",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "d085f567f7d43b197cb43d04e9fbda1e6beb1fdf9ac00db0a834adfea430c649",
+          "inputSchema": "c66de71a10d1b78a5564f65ade6187bb5ff6cb3d92ed96ea5dc950422a996f54",
+          "name": "51ff9fe036f3ffbceb61c3b2b59a8d8472918989ffd6c46181e4829dc1281b2b",
+          "outputSchema": "54750d38bb67ed2a0c203ae92fdb140ff9cafba458474daf6c62aeb6a45a6c57"
+        }
+      },
+      "uam_workspace_snapshot": {
+        "contract": "af974d7e10848606588d4c7ebf071093555f9c797cd35b0f3f3f24eab0f6b5a5",
+        "fields": {
+          "annotations": "b85f31ecc2581a2ad1d163e54abebb69d31e072969ae6e45f69bb72686c69ecc",
+          "description": "452bf746182fcd43bba043c207508ec6040766a4d4c3b072eef81e1bf91058e8",
+          "inputSchema": "27a379efed4da73ecf437a31f94d98450338379dc723dd7c383506e516558dcd",
+          "name": "adb60220807bb8ed92b577c93488336ebe64a4e19dbf3cce5548800547b5fbe4",
+          "outputSchema": "33bb870bff0f199e62df87e9ffca12a26edb9154dc71e7b616c3e1e39b6dcb38"
+        }
+      }
+    },
+    "tool_count": 20,
+    "tools": [
+      "uam_discover_projects",
+      "uam_explain_coverage",
+      "uam_explore",
+      "uam_file_digest",
+      "uam_git_diff",
+      "uam_git_log",
+      "uam_git_status",
+      "uam_list_project_instances",
+      "uam_list_scopes",
+      "uam_list_workspaces",
+      "uam_project_reality",
+      "uam_read_file",
+      "uam_scope_inventory",
+      "uam_search_scope",
+      "uam_search_text",
+      "uam_session_bootstrap",
+      "uam_tree",
+      "uam_verify_audit",
+      "uam_what_am_i_missing",
+      "uam_workspace_snapshot"
+    ]
+  },
+  "defaults": {
+    "directory_admit": false,
+    "static_registration_authorization": "independent_of_root_scopes"
+  },
+  "description_digest_basis": "the description text as advertised by an interpreter that strips docstring indentation at compile time (Python 3.13 or later); the name, input, output and safety digests do not depend on the interpreter",
+  "extends": "READ_ONLY_SESSION_PROFILE_V2",
+  "fingerprint_roles": {
+    "description": "description",
+    "input": "inputSchema",
+    "output": "outputSchema",
+    "safety": "annotations"
+  },
+  "metadata_diff_vs_baseline": {
+    "added": [
+      "uam_file_digest"
+    ],
+    "changed": {
+      "uam_git_log": [
+        "description"
+      ],
+      "uam_git_status": [
+        "description"
+      ],
+      "uam_list_project_instances": [
+        "description"
+      ],
+      "uam_list_workspaces": [
+        "description"
+      ],
+      "uam_project_reality": [
+        "description"
+      ],
+      "uam_search_scope": [
+        "description"
+      ],
+      "uam_session_bootstrap": [
+        "description"
+      ]
+    },
+    "client_refresh_needed": true,
+    "removed": [],
+    "status": "COMPARED"
+  },
+  "profile": "READ_ONLY_SESSION_PROFILE_V3",
+  "safety": {
+    "destructiveHint": false,
+    "openWorldHint": false,
+    "readOnlyHint": true
+  },
+  "schema": "uam-profile-declaration-v1",
+  "serving": {
+    "uam_file_digest": {
+      "not_served_by": [
+        "legacy_http_openapi_adapter",
+        "custom_stdio_mcp_adapter"
+      ],
+      "served_by": [
+        "mcp_sdk_adapter"
+      ]
+    }
+  },
+  "status": "ADOPTED_LOCALLY"
+}

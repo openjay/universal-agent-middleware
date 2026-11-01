@@ -18,3 +18,5 @@ The package targets Agent Plugins `1.0.0`. As of 2026-08-08 the official specifi
 `mcp.json` deliberately contains no Authorization header or secret. Agent Plugins v1 does not make portable package metadata the UAM authorization source; authentication remains client/deployment managed. A client that cannot supply the required application authorization may fail to connect without expanding or weakening UAM capabilities.
 
 The package is a discovery/distribution shell only. It cannot modify workspace policy, create new effect authority, or override a project SSOT.
+
+**Not a first-use path.** The package has its own version (`0.2.0`), independent of the UAM package version, and its `mcp.json` points at a streamable-HTTP `/mcp` endpoint (`http://127.0.0.1:8765/mcp`) that has not been verified against this release. Start with the native stdio entry in the README (`uam mcp-sdk-stdio --profile session-read`).

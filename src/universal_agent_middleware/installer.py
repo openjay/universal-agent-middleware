@@ -18,6 +18,7 @@ import tomllib
 import uuid
 from pathlib import Path
 
+from .release_config import adopt_config_file, compute_bundle, require_config_combination
 from .runtime import (SCHEMA, atomic_json, sha256, release_files, load_runtime,
                       validate_configs, validate_release, check_credential)
 from .service import mcp_command, validate_tunnel_config
@@ -119,10 +120,7 @@ def stage(source: Path, *, home: Path, state_root: Path, registry: Path, scopes:
     config_root = uam_home / "config"
     config_root.mkdir(parents=True, exist_ok=True)
     for src, name in [(registry, "workspaces.json"), (scopes, "root_scopes.json")]:
-        dest = config_root / name
-        if not dest.exists():
-            with dest.open("xb") as fh:
-                fh.write(src.read_bytes())
+        adopt_config_file(src, config_root / name)
     with tempfile.TemporaryDirectory(prefix="uam-clean-build-") as td:
         build_root = Path(td)
         archive = subprocess.run(["git", "-C", str(source), "archive", identity["source_commit"]],
@@ -149,9 +147,11 @@ def stage(source: Path, *, home: Path, state_root: Path, registry: Path, scopes:
             "tunnel_profile": tunnel_config.stem,
             "policy_file": str(release / "service/recovery_policies.yaml"),
             "canaries": json.loads(canaries.read_text())}
-        validate_configs(runtime)
+        validate_configs(runtime, require_complete_registry=True)
         if not runtime["canaries"]:
             raise ValueError("at least one explicit semantic canary is required")
+        require_config_combination(runtime, require_bundle=False)
+        runtime["config_bundle"] = compute_bundle(runtime)
         # Build only the Git archive; ignored local files cannot enter this artifact.
         artifacts = release / "artifacts"
         artifacts.mkdir()
@@ -205,14 +205,17 @@ with tempfile.TemporaryDirectory() as d:
         runtime["release_manifest_sha256"] = digest
         atomic_json(planned / "uam-runtime.json", runtime)
         atomic_json(release / "STAGING_RECEIPT.json", {"state": "STAGED_NOT_ACTIVE", "release_id": release_id,
-                                                      "runtime_ready": False, "release_manifest_sha256": digest})
+                                                      "runtime_ready": False, "release_manifest_sha256": digest,
+                                                      "config_bundle": runtime["config_bundle"]})
         return planned / "uam-runtime.json"
 
 
 def activate(plan: Path, home: Path) -> None:
     runtime = load_runtime(plan)
     release, uam_home = Path(runtime["current_release"]), Path(runtime["uam_home"])
-    validate_configs(runtime)
+    validate_configs(runtime, require_complete_registry=True)
+    # A release is activated only against the Registry/RootScopes/canaries it was staged with.
+    require_config_combination(runtime, require_bundle=True)
     # Refuse legacy, corrupt or missing state instead of silently resetting GENESIS.
     from .doctor import _check_audit
     if _check_audit(runtime["state_root"], require_existing=True)["status"] != "PASS":

@@ -4,7 +4,7 @@
     {
       "scope_id": "home",
       "root": "/path/to/home",
-      "description": "Broad discovery-only zone (metadata and inventory only)",
+      "description": "Broad discovery-only zone (metadata and inventory only). Skips macOS TCC-protected system directories.",
       "authority": {
         "discover": true,
         "metadata_read": true,
@@ -31,6 +31,23 @@
         "index": true,
         "relate": true,
         "auto_admit": true
+      }
+    },
+    {
+      "scope_id": "notes",
+      "root": "/path/to/your/code/notes",
+      "description": "Narrow zone whose plain (non-Git) folders may be read on demand as filesystem-directory workspaces. Never enable directory_admit on a broad root. Not discovered or indexed.",
+      "authority": {
+        "discover": false,
+        "metadata_read": false,
+        "content_read": true,
+        "text_search": false,
+        "git_observe": false,
+        "classify": false,
+        "index": false,
+        "relate": false,
+        "auto_admit": false,
+        "directory_admit": true
       }
     }
   ],
